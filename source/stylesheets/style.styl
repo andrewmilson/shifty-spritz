@@ -1,0 +1,51 @@
+body, html
+  margin 0
+  padding 0
+
+#spritzify
+  background #fff
+  width 100%
+  height 70px
+  color #333
+  position fixed
+  font-family "Droid sans"
+  font-size 40px
+  line-height 70px
+
+  #words
+    height 100%
+    width 100%
+
+    #progress-bar
+      background #333
+      width 100%
+      float left
+      height 2px
+      margin -2px 0 0 0
+ 
+      #progress
+        height 100%
+        background salmon
+        width 0
+    
+    #left, #right, #center
+      height 100%
+      float left
+      display inline-block
+
+    #center
+      color salmon
+
+      &:before
+        content ""
+        display none
+        border 5px solid transparent
+        border-bottom-color #ddd
+        position absolute
+        left 30%
+        top 100%
+        margin -10px 0 0 0px;
+
+    #left
+      width 30%
+      text-align right
