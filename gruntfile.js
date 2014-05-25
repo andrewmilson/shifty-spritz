@@ -93,15 +93,6 @@ module.exports = function(grunt) {
         files: ['source/**', '!source/**/*.styl', '!source/**/*.coffee', '!source/**/*.jade'],
         tasks: ['copy']
       }
-    },
-    connect: {
-      server: {
-        options: {
-          port: 8000,
-          base: 'build',
-          hostname: '*'
-        }
-      }
     }
   });
 
@@ -113,7 +104,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-autoprefixer');
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-connect');
 
   grunt.registerTask(
     'scripts', 
@@ -136,7 +126,7 @@ module.exports = function(grunt) {
   grunt.registerTask(
     'default', 
     'Watches the project for changes, automatically builds them and runs a server.', 
-    ['build', 'connect', 'watch']
+    ['build', 'watch']
   );
 }
 
