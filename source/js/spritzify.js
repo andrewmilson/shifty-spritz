@@ -102,6 +102,8 @@ $(function() {
       }
     }
 
+    $('body').css("margin-top", spritzify.meta.$spritzify.height() + " !important");
+
     var dragDown = false
       , dragOffset = {x: 0, y: 0};
 
@@ -141,10 +143,10 @@ $(function() {
     var pressedTimeout;
 
     $(document).keydown(function(e) {
-      console.log("yo");
       pressedTimeout = setTimeout(function() {
         var selectedText = getSelectionText();
         if (selectedText.length) {
+          spritzify.meta.$spritzify.show();
           spritzify.init(selectedText, 500)
         }
       }, 500);
