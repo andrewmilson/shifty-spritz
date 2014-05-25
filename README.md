@@ -1,7 +1,7 @@
 spritzify
 =========
 
-Easy to use Javascript Spritz style reader. I plan to make this an extension for the most popular browsers. To build and get a demo of spritzify follow the build instructions below and then head over to [http://localhost:8000](http://localhost:8000) in your favourite browser.
+Easy to use Javascript Spritz style reader extension for Google Chrome. I plan to make this an extension for other browsers as well. To build and get a demo of spritzify follow the build instructions below.
 
 ### Build
 make sure you have [nodejs](http://nodejs.org/) and [grunt CLI](http://gruntjs.com/getting-started) installed before doing the commands below in terminal.
@@ -11,4 +11,6 @@ make sure you have [nodejs](http://nodejs.org/) and [grunt CLI](http://gruntjs.c
     npm install
     grunt
 
-then head over to [http://localhost:8000](http://localhost:8000) in your favourite browser
+The in Google Chrome head over to tools > extensions. Click the button at the top that says "Load unpacked extension". Locate the build directory inside spritzify and press select. After that its just a matter of loading a webpage and holding the SHIFT key on some selected text and watching the magic appear in front of you.
+
+Please feel free to contribute to the project as 2 brains are better than one.
