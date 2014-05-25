@@ -1,32 +1,71 @@
 body, html
   margin 0
   padding 0
+  height 100%
 
 #spritzify
-  background #fff
-  width 100%
-  height 70px
-  color #333
+  width 500px
+  background rgba(0, 0, 0, 0.8)
+  border 10px solid transparent
+  border-bottom none
+  top 0
+  left 0
+  color #fff
+  border-radius 5px
+  z-index 1
   position fixed
+  user-select none
   font-family "Droid sans"
-  font-size 40px
-  line-height 70px
 
-  #words
-    height 100%
+  i
+    line-height 30px
+    cursor pointer
+    font-size 14px
+    margin 0 0 0 8px
+
+    &.left
+      float left
+
+    &.right
+      float right
+
+  #top
+    i
+      margin 0 0 0 8px
+
+  #controls, #top
     width 100%
+    height 30px
+
+    #pause-play
+      margin 0
 
     #progress-bar
-      background #333
-      width 100%
-      float left
-      height 2px
-      margin -2px 0 0 0
+      background rgba(255, 255, 255, 0.2)
+      margin 10px 0 0 0
+      border-radius 5px
+      height 10px
+      width 438px
+      cursor pointer
+      float right
  
       #progress
         height 100%
-        background salmon
+        background rgba(255, 255, 255, 1)
         width 0
+        border-radius inherit
+
+  #words
+    height 100px
+    background #fff
+    border-radius 3px
+    border-bottom none
+    line-height 100px
+    cursor move
+    font-size 50px
+    width 100%
+    color #333
+    box-sizing border-box
     
     #left, #right, #center
       height 100%
@@ -34,7 +73,7 @@ body, html
       display inline-block
 
     #center
-      color salmon
+      color #fa3d3d
 
       &:before
         content ""
@@ -42,9 +81,9 @@ body, html
         border 5px solid transparent
         border-bottom-color #ddd
         position absolute
-        left 30%
+        left 40%
         top 100%
-        margin -10px 0 0 0px;
+        margin -10px 0 0 0px
 
     #left
       width 30%

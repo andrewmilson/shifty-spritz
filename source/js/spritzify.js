@@ -3,21 +3,29 @@ $(function() {
     meta: {
       words: "",
       wordCount: 0,
-      wordSpeed: 60000 / 600,
+      play: true,
+      wordSpeed: 60000 / 400,
+      nextWordTimeout: 0,
       $spritzify: $('#spritzify'),
+      $words: $('#spritzify #words'),
       $left: $('#spritzify #left'),
       $center: $('#spritzify #center'),
       $right: $('#spritzify #right'),
-      $progress: $('#spritzify #progress')
+      $progressBar: $('#spritzify #progress-bar'),
+      $progress: $('#spritzify #progress'),
+      $pausePlay: $('#spritzify #pause-play')
     },
     getWords: function(text) {
       return text.split(/\s+/g)
     },
+    updateProgress: function() {
+      this.meta.$progress.css("width", Math.floor(100 / this.meta.words.length * (this.meta.wordCount + 1)) + "%")
+      console.log(100 / this.meta.words.length, (this.meta.wordCount));
+    },
     stop: function() {
       this.meta.wordCount = 0;
     },
-    getNextWord: function() {
-      this.meta.wordCount++;
+    getWord: function() {
       return this.meta.wordCount <= this.meta.words.length ? this.meta.words[this.meta.wordCount] : false;
     },
     splitWord: function (word) {
@@ -41,29 +49,35 @@ $(function() {
           pivot = 4;
       }
 
-      console.log([word.substring(0, pivot), word.substring(pivot, pivot + 1), word.substring(pivot + 1)]);
       return [word.substring(0, pivot), word.substring(pivot, pivot + 1), word.substring(pivot + 1)];
     },
-    readNextWord: function() {
+    goFrompercent: function(percent) {
+      this.meta.wordCount = Math.floor(this.meta.words.length / 100 * percent);
+      this.updateProgress();
+      clearInterval(this.nextWordTimeout);
+      this.readNextWord(500);
+    },
+    readNextWord: function(delay) {
       var self = this
-        , nextWord = this.getNextWord()
-        , wordSpeed = this.meta.wordSpeed;
+        , nextWord = this.getWord()
+        , wordSpeed = this.meta.wordSpeed
+        , splitWord = this.splitWord(nextWord);
 
-      if (nextWord) {
-        var splitWord = this.splitWord(nextWord);
+      delay = delay || 0;
 
-        this.meta.$left.html(splitWord[0]);
-        this.meta.$center.html(splitWord[1]);
-        this.meta.$right.html(splitWord[2]);
-        this.meta.$progress.css("width", Math.floor(100 / this.meta.words.length * (this.meta.wordCount + 1)) + "%")
+      this.meta.$left.html(splitWord[0]);
+      this.meta.$center.html(splitWord[1]);
+      this.meta.$right.html(splitWord[2]);
+      this.updateProgress();
 
-        wordSpeed += nextWord.slice(-1) == "." ? 100 : 0;
-
-        setTimeout(function() {
+      wordSpeed += nextWord.slice(-1) == "." ? wordSpeed : 0;
+      wordSpeed += delay;
+      this.meta.wordCount++;
+      
+      if (nextWord && this.meta.play) {
+        this.nextWordTimeout = setTimeout(function() {
             self.readNextWord();
           }, wordSpeed);
-      } else {
-        this.stop()
       }
     },
     init: function(text, wpm) {
@@ -72,5 +86,41 @@ $(function() {
     }
   }
 
-  spritzify.init("The Moon is a barren, rocky world without air and water. It has dark lava plain on its surface. The Moon is filled wit craters. It has no light of its own. It gets its light from the Sun. The Moon keeps changing its shape as it moves round the Earth. It spins on its axis in 27.3 days stars were named after the Edwin Aldrin were the first ones to set their foot on the Moon on 21 July 1969 They reached the Moon in their space craft named Apollo II.", 500);
+  var dragDown = false
+    , dragOffset = {x: 0, y: 0};
+
+  spritzify.init("Ukrainian forces launch an 'anti-terrorist operation' after pro-Russian gunmen seize buildings in the eastern part of the country. FULL STORY", 500);
+
+
+  spritzify.meta.$progressBar.click(function(e) {
+    spritzify.goFrompercent(Math.floor(100 / spritzify.meta.$progressBar.width() * (e.pageX - spritzify.meta.$progressBar.offset().left)));
+  });
+
+  spritzify.meta.$pausePlay.click(function() {
+    spritzify.meta.play = !spritzify.meta.play;
+    spritzify.meta.$pausePlay.addClass(spritzify.meta.play ? "fa-pause" : "fa-play").removeClass(!spritzify.meta.play ? "fa-pause" : "fa-play");
+    clearInterval(spritzify.nextWordTimeout);
+    !spritzify.meta.play || spritzify.readNextWord();
+  });
+
+  spritzify.meta.$words.mousedown(function(e) {
+    dragDown = true;
+    dragOffset = {
+      x: e.pageX - spritzify.meta.$spritzify.offset().left,
+      y: e.pageY - spritzify.meta.$spritzify.offset().top
+    };
+  });
+
+  $(document).mouseup(function(e) {
+    dragDown = false;
+  });
+
+  $(document).mousemove(function(e) {
+    if (dragDown) {
+      spritzify.meta.$spritzify.css({
+        "left": e.pageX - dragOffset.x,
+        "top": e.pageY - dragOffset.y
+      });
+    }
+  });
 });

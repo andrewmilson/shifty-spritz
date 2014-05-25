@@ -1,15 +1,18 @@
 doctype html
 html(lang="en")
   head
-    script(type="text/javascript", src="http://localhost:35729/livereload.js")
-    script(type="text/javascript", src="js/jquery.min.js")
-    script(type="text/javascript", src="js/spritzify.min.js")
-    link(href="stylesheets/style.css", rel="stylesheet")
+    script(type="text/javascript", src="application.js")
+    link(href="application.css", rel="stylesheet")
   body
+    iframe(src="http://smashingmagazine.com", style="border: 0; width: 100%; height: 100%") Your browser doesn't support iFrames
     #spritzify
       #words
         #left h
         #center e
-        #right lofjdshfjsfdshfdsjfhdskjhjdhkhdshjkkkkkkkkkjjjjllllfjdkfhdjksfsppp
+        #right llo
+      #controls
+        i#pause-play.fa.fa-pause.left
+        i#close.fa.fa-times.right
+        i#settings.fa.fa-cog.right
         #progress-bar
           #progress
