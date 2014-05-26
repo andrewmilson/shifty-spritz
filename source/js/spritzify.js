@@ -1,4 +1,4 @@
-$('body').prepend($('<div id="spritzify"></div>').load(chrome.extension.getURL("index.html"), function() {
+$('body').prepend($('<div id="spritzify" class="hide"></div>').load(chrome.extension.getURL("index.html"), function() {
   function getSelectionText() {
     var text = "";
 
@@ -18,6 +18,7 @@ $('body').prepend($('<div id="spritzify"></div>').load(chrome.extension.getURL("
       play: true,
       wordSpeed: 60000 / 500,
       nextWordTimeout: 0,
+      $document: $(document),
       $spritzify: $('#spritzify'),
       $words: $('#spritzify #words'),
       $left: $('#spritzify #left'),
@@ -27,12 +28,39 @@ $('body').prepend($('<div id="spritzify"></div>').load(chrome.extension.getURL("
       $progress: $('#spritzify #progress'),
       $pausePlay: $('#spritzify #pause-play')
     },
+    showSpritzify: function() {
+      if (spritzify.meta.$spritzify.hasClass("hide")) {
+        $('body').css({
+          "margin-top": spritzify.meta.$spritzify.outerHeight() + "px", 
+          "position": "relative"
+        });
+
+        $("*").each(function(index, element) {
+          if ($(element).css("position") == "fixed")
+            $(element).css("top", $(element).position().top + spritzify.meta.$spritzify.outerHeight() + "px");
+        });
+
+        spritzify.meta.$spritzify.css("top", "0");
+        spritzify.meta.$spritzify.removeClass("hide");
+      }
+    },
+    hideSpritzify: function() {
+      if (!spritzify.meta.$spritzify.hasClass("hide")) {
+        $('body').css("margin-top", "0px");
+
+        $("*").each(function(index, element) {
+          if ($(element).css("position") == "fixed")
+            $(element).css("top", $(element).position().top - spritzify.meta.$spritzify.outerHeight() + "px");
+        });
+
+        spritzify.meta.$spritzify.addClass("hide");
+      }
+    },
     getWords: function(text) {
       return text.split(/\s+/g).filter(function(x) { return x.length; });
     },
     updateProgress: function() {
       this.meta.$progress.css("width", Math.floor(100 / this.meta.words.length * (this.meta.wordCount + 1)) + "%")
-      console.log(100 / this.meta.words.length, (this.meta.wordCount));
     },
     stop: function() {
       this.meta.wordCount = 0;
@@ -101,15 +129,6 @@ $('body').prepend($('<div id="spritzify"></div>').load(chrome.extension.getURL("
     }
   }
 
-  $('body').css({"margin-top": spritzify.meta.$spritzify.outerHeight() + "px", "position": "relative"});
-
-  $("*").each(function(index, element) {
-    if ($(element).css("position") == "fixed")
-      $(element).css("top", $(element).position().top + spritzify.meta.$spritzify.outerHeight() + "px");
-  });
-
-  spritzify.meta.$spritzify.css("top", "0");
-
   var dragDown = false
     , dragOffset = {x: 0, y: 0};
 
@@ -132,11 +151,11 @@ $('body').prepend($('<div id="spritzify"></div>').load(chrome.extension.getURL("
     };
   });
 
-  $(document).mouseup(function(e) {
+  spritzify.meta.$document.mouseup(function(e) {
     dragDown = false;
   });
 
-  $(document).mousemove(function(e) {
+  spritzify.meta.$document.mousemove(function(e) {
     if (dragDown) {
       spritzify.meta.$spritzify.css({
         "left": e.pageX - dragOffset.x,
@@ -147,19 +166,18 @@ $('body').prepend($('<div id="spritzify"></div>').load(chrome.extension.getURL("
 
   var pressedTimeout;
 
-  $(document).keydown(function(e) {
+  spritzify.meta.$document.keydown(function(e) {
     if (e.shiftKey) {
       pressedTimeout = setTimeout(function() {
         var selectedText = getSelectionText();
         if (selectedText.length) {
-          spritzify.meta.$spritzify.show();
+          spritzify.showSpritzify();
           spritzify.init(selectedText, 500)
         }
       }, 500);
     }
-  });
-
-  $(document).keyup(function(e) {
+  }).keyup(function(e) {
     clearTimeout(pressedTimeout);
   });
+
 }));
