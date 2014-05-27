@@ -12,7 +12,7 @@
   position fixed
   user-select none
   font-family "Droid sans"
-  transition opacity 0.1s linear
+  transition opacity 0.3s linear
   opacity 1
 
   &.hide
@@ -54,7 +54,7 @@
  
       #progress
         height 100%
-        transition width 0.15s linear
+        // transition width 0.15s linear
         background rgba(255, 255, 255, 0.2)
         width 0
         border-radius inherit
@@ -65,10 +65,28 @@
     border-bottom none
     height 50px
     cursor move
-    font-size 3em
+    font-weight 500
+    font-size 25px
     line-height 50px
     width 100%
     color #333
+    position relative
+
+    &:before, &:after
+      content ""
+      display block
+      border 5px solid transparent
+      position absolute
+      left calc(30% + 3px)
+
+    &:after
+      border-top-color #000
+      top 0
+
+    &:before
+      border-bottom-color #000
+      top 100%
+      margin -10px 0 0 0px
     
     #left, #right, #center
       height 100%
@@ -78,16 +96,6 @@
 
     #center
       color #fa3d3d
-
-      &:before
-        content ""
-        display none
-        border 5px solid transparent
-        border-bottom-color #ddd
-        position absolute
-        left 40%
-        top 100%
-        margin -10px 0 0 0px
 
     #left
       width 30%
