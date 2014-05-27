@@ -12,7 +12,7 @@
     "grunt-contrib-jade": "0.8.x",
     "grunt-contrib-jshint": "0.6.x",
     "grunt-contrib-stylus": "0.16.x",
-    "grunt-contrib-uglify": "0.2.x",
+    "grunt-contrib-uglify": "^0.4.0",
     "grunt-contrib-watch": "0.5.x"
   }
 }

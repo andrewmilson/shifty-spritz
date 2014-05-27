@@ -1,40 +1,45 @@
 module.exports = function(grunt) {
+ 
+  // configure the tasks
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+ 
     copy: {
       build: {
         cwd: 'source',
+        src: [ '**', '!**/*.styl', '!**/*.coffee', '!**/*.jade' ],
         dest: 'build',
-        src: ['**', '!**/*.styl', '!**/*.coffee', '!**/*.jade'],
         expand: true
-      }
+      },
     },
+ 
     clean: {
       build: {
-        src: ['build']
+        src: [ 'build' ]
       },
       stylesheets: {
-        src: ['build/**/*.css', '!build/css/application.css']
+        src: [ 'build/**/*.css', '!build/application.css' ]
       },
       scripts: {
-        src: ['build/**/*.js', '!build/js/application.js']
-      }
+        src: [ 'build/js/**/*.js' ]
+      },
     },
+ 
     stylus: {
       build: {
         options: {
           linenos: true,
-          compress: true
+          compress: false
         },
         files: [{
           expand: true,
           cwd: 'source',
-          src: ['**/*.styl'],
+          src: [ '**/*.styl' ],
           dest: 'build',
           ext: '.css'
         }]
       }
     },
+ 
     autoprefixer: {
       build: {
         expand: true,
@@ -43,25 +48,36 @@ module.exports = function(grunt) {
         dest: 'build'
       }
     },
+ 
     cssmin: {
       build: {
         files: {
-          'build/css/application.css': ['build/**/*.css']
+          'build/application.css': [ 'build/**/*.css' ]
         }
       }
     },
+ 
+    coffee: {
+      build: {
+        expand: true,
+        cwd: 'source',
+        src: [ '**/*.coffee' ],
+        dest: 'build',
+        ext: '.js'
+      }
+    },
+ 
     uglify: {
       build: {
-        options: {
-          compress: false,
-          beautify: true,
-          mangle: false
-        },
-        files: {
-          'build/js/application.js': ['build/js/**/*.js']
-        }
+        files: [{
+            expand: true,
+            cwd: 'source',
+            src: '**/*.js',
+            dest: 'build'
+        }]
       }
     },
+ 
     jade: {
       compile: {
         options: {
@@ -76,57 +92,62 @@ module.exports = function(grunt) {
         }]
       }
     },
+ 
     watch: {
       stylesheets: {
         files: 'source/**/*.styl',
-        tasks: ['stylesheets']
+        tasks: [ 'stylesheets' ]
       },
       scripts: {
-        files: 'source/**/*.js',
-        tasks: ['scripts']
+        files: 'source/**/*.coffee',
+        tasks: [ 'scripts' ]
       },
       jade: {
         files: 'source/**/*.jade',
-        tasks: ['jade']
+        tasks: [ 'jade' ]
       },
       copy: {
-        files: ['source/**', '!source/**/*.styl', '!source/**/*.coffee', '!source/**/*.jade'],
-        tasks: ['copy']
+        files: [ 'source/**', '!source/**/*.styl', '!source/**/*.coffee', '!source/**/*.jade' ],
+        tasks: [ 'copy' ]
       }
     }
-  });
 
+  });
+ 
+  // load the tasks
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-stylus');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-watch');
-
+  grunt.loadNpmTasks('grunt-contrib-connect');
+ 
+  // define the tasks
+  grunt.registerTask(
+    'stylesheets', 
+    'Compiles the stylesheets.', 
+    [ 'stylus', 'autoprefixer', 'cssmin', 'clean:stylesheets' ]
+  );
+ 
   grunt.registerTask(
     'scripts', 
-    'Javascrips compression and shit.', 
-    ['uglify', 'clean:scripts']
+    'Compiles the JavaScript files.', 
+    [ 'clean:scripts', 'coffee', 'uglify' ]
   );
-
-  grunt.registerTask(
-    'stylesheets',
-    'All that CSS jazz.',
-    ['stylus', 'autoprefixer', 'cssmin', 'clean:stylesheets']
-  );
-
+ 
   grunt.registerTask(
     'build', 
-    'Builds the project in the build/ directory', 
-    ['clean:build', 'copy', 'stylesheets', 'scripts', 'jade']
+    'Compiles all of the assets and copies the files to the build directory.', 
+    [ 'clean:build', 'copy', 'stylesheets', 'scripts', 'jade' ]
   );
-
+ 
   grunt.registerTask(
     'default', 
     'Watches the project for changes, automatically builds them and runs a server.', 
-    ['build', 'watch']
+    [ 'build', 'watch' ]
   );
-}
-
+};
