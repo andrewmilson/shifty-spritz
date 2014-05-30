@@ -1,8 +1,10 @@
-#spritzify
+//body.shifty-spritz
+//  -webkit-transition margin-top 0.1s linear
+
+#shifty-spritz
   width 100%
   background rgba(0, 0, 0, 1)
-  border 10px solid transparent
-  border-bottom none
+  border-top 10px solid transparent
   box-sizing border-box
   top 0
   left 0
@@ -12,12 +14,9 @@
   position fixed
   user-select none
   font-family "Droid sans"
-  transition opacity 0.3s linear
-  opacity 1
 
   &.hide
     display none
-    opacity 0.5
 
   i
     line-height 30px
@@ -38,6 +37,8 @@
   #controls
     display block
     width 100%
+    box-sizing border-box
+    padding 0 10px
     height 30px
 
     #pause-play
@@ -61,7 +62,6 @@
 
   #words
     background #fff
-    border-radius 3px
     border-bottom none
     height 50px
     cursor move
