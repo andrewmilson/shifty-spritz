@@ -63,8 +63,9 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
         words.push("");
         words
 
-      text.split(/[\n\r]+/g).filter(@empty).map(map.bind(this)).reduce (a, b) ->
-        a.concat b
+      text = text.split(/[\n\r]+/g).filter(@empty).map(map.bind(this)).reduce (a, b) -> a.concat b
+      text.pop()
+      text
 
     updateProgress: ->
       @meta.$progress.css "width", Math.floor(100 / @meta.words.length * (@meta.word + 1)) + "%"
