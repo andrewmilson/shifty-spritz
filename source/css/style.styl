@@ -1,19 +1,21 @@
-//body.shifty-spritz
-//  -webkit-transition margin-top 0.1s linear
-
 #shifty-spritz
   width 100%
   background rgba(0, 0, 0, 1)
   border-top 10px solid transparent
+  border-bottom 10px solid transparent
   box-sizing border-box
   top 0
   left 0
+  text-align left
   display block
   color #fff
   z-index 2147483647
   position fixed
   user-select none
   font-family "Droid sans"
+
+  &:hover #controls
+    display block
 
   &.hide
     display none
@@ -22,7 +24,7 @@
     line-height 30px
     cursor pointer
     font-size 14px
-    margin 0 0 0 8px
+    padding 0 5px
 
     &.left
       float left
@@ -30,35 +32,49 @@
     &.right
       float right
 
-  #top
-    i
-      margin 0 0 0 8px
-
   #controls
     display block
     width 100%
     box-sizing border-box
-    padding 0 10px
     height 30px
+    margin 0 0 -10px 0
+    
+    #pause-play
+      padding-left 10px
+
+    #close
+      padding-right 10px
 
     #pause-play
       margin 0
 
     #progress-bar
       background rgba(255, 255, 255, 0.2)
-      margin 10px 0 0 0
+      margin 10px 5px 0 0
       border-radius 5px
       height 10px
-      width calc(100% - 60px)
+      width calc(100% - 85px)
       cursor pointer
       float right
  
       #progress
         height 100%
-        // transition width 0.15s linear
-        background rgba(255, 255, 255, 0.2)
+        min-width 10px
+        position relative
+        background rgba(255, 255, 255, 0.5)
         width 0
         border-radius inherit
+
+        &:after
+          content ""
+          display block
+          border-radius inherit
+          height 10px
+          width 10px
+          background #000
+          position absolute
+          right 0
+          top 0
 
   #words
     background #fff
