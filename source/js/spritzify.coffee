@@ -1,16 +1,16 @@
 $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chrome.extension.getURL("index.html"), ->
   getSelectionText = ->
-    text = ""
     if window.getSelection
-      text = window.getSelection().toString()
-    else text = document.selection.createRange().text  if document.selection and document.selection.type isnt "Control"
-    text
+      window.getSelection().toString()
+    else document.selection.createRange().text if document.selection and document.selection.type isnt "Control"
+    else ""
+
   shiftySpritz =
     meta:
       word: 0
       text: {}
       play: true
-      wordSpeed: 60000 / 400
+      wordSpeed: 60000 / 300
       nextWordTimeout: 0
       $document: $(document)
       $shiftySpritz: $("#shifty-spritz")
@@ -59,8 +59,8 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
 
     getText: (text) ->
       map = (x) ->
-        words = x.split(/\s+/g)
-        words.push("");
+        words = x.split /\s+/g
+        words.push ""
         words
 
       text = text.split(/[\n\r]+/g).filter(@empty).map(map.bind(this)).reduce (a, b) -> a.concat b
@@ -68,53 +68,47 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
       text
 
     updateProgress: ->
-      @meta.$progress.css "width", Math.floor(100 / @meta.words.length * (@meta.word + 1)) + "%"
+      @meta.$progress.css "width", Math.floor(100 / @meta.text.length * (@meta.word + 1)) + "%"
       return
 
     getWord: ->
       @meta.text[@meta.paragraph].words[@meta.word]
 
     splitWord: (word) ->
-      pivot = 1
-      telly = true
-      switch true
-        when word.length <= 1
-          pivot = 0
-        when word.length >= 2 and word.length <= 5
-          pivot = 1
-        when word.length >= 6 and word.length <= 9
-          pivot = 2
-        when word.length >= 10 and word.length <= 13
-          pivot = 3
-        else
-          pivot = 4
+      pivot = switch
+        when word.length < 2 then 0
+        when word.length < 6 then 1
+        when word.length < 10 then 2
+        when word.length < 14 then 3
+        else 4
+
       [
-        word.substring(0, pivot)
-        word.substring(pivot, pivot + 1)
-        word.substring(pivot + 1)
+        word.substring 0, pivot
+        word.substring pivot, pivot + 1
+        word.substring pivot + 1
       ]
 
     goFrompercent: (percent) ->
       @meta.word = Math.floor(@meta.words.length / 100 * percent)
       @updateProgress()
-      clearInterval @nextWordTimeout
+      clearTimeout @meta.nextWordTimeout
       @readNextWord @meta.wordSpeed
       return
 
-    readNextWord: (delay) ->
-      if @meta.word is @meta.text.length
-        return false
+    readNextWord: (delay = 0) ->
+      return false if @meta.word is @meta.text.length
 
       self = @
       wordSpeed = @meta.wordSpeed
       splitWord = @splitWord @meta.text[@meta.word]
       wordSpeed += (if @meta.text[@meta.word].slice(-1) in [".", ","] then wordSpeed else 0)
       wordSpeed += (if @meta.text[@meta.word] == "" then wordSpeed * 3 else 0)
-      wordSpeed += delay or 0
+      wordSpeed += delay
 
       @meta.$left.html splitWord[0]
       @meta.$center.html splitWord[1]
       @meta.$right.html splitWord[2]
+      @updateProgress()
 
       @meta.word++
 
@@ -125,9 +119,9 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
       return
 
     init: (text, wpm, countdown) ->
+      clearTimeout @meta.nextWordTimeout;
       @meta.word = 0
       @meta.text = @getText text
-      console.log @meta.text
       @readNextWord(if countdown then @meta.wordSpeed else 0)
       return
 
@@ -143,7 +137,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
   shiftySpritz.meta.$pausePlay.click ->
     shiftySpritz.meta.play = not shiftySpritz.meta.play
     shiftySpritz.meta.$pausePlay.addClass((if shiftySpritz.meta.play then "fa-pause" else "fa-play")).removeClass (if not shiftySpritz.meta.play then "fa-pause" else "fa-play")
-    clearInterval shiftySpritz.nextWordTimeout
+    clearTimeout shiftySpritz.meta.nextWordTimeout
     not shiftySpritz.meta.play or shiftySpritz.readNextWord()
     return
 
