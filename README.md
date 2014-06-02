@@ -9,7 +9,7 @@ make sure you have [nodejs](http://nodejs.org/) and [grunt CLI](http://gruntjs.c
     git clone https://github.com/andymil/spritzify.git
     cd spritzify/
     npm install
-    grunt
+    grunt build
 
 Then in Google Chrome head over to tools > extensions. Click the button at the top that says "Load unpacked extension". Locate the build directory inside spritzify and press select. After that its just a matter of loading a webpage and holding the SHIFT key on some selected text and watching the magic appear in front of you.
 
