@@ -19,7 +19,8 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
       $center: $("#shifty-spritz #center")
       $right: $("#shifty-spritz #right")
       $progressBar: $("#shifty-spritz #progress-bar")
-      $progress: $("#shifty-spritz #progress")
+      $progressSeek: $("#shifty-spritz #progress-bar #seek")
+      $progress: $("#shifty-spritz #progress-bar #progress")
       $pausePlay: $("#shifty-spritz #pause-play")
       $close: $("#shifty-spritz #close")
 
@@ -28,11 +29,9 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
         $("body").addClass("shifty-spritz").css
           "margin-top": shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"
           position: "relative"
-
         $("*").each (index, element) ->
           $(element).css "top", $(element).position().top + shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
           return
-
         @meta.$shiftySpritz.css 
           "top": "0"
           "margin-top": "0"
@@ -48,7 +47,6 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
         $("*").each (index, element) ->
           $(element).css "top", $(element).position().top - shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
           return
-
         shiftySpritz.meta.$shiftySpritz.addClass "hide"
         true
       else
@@ -62,13 +60,12 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
         words = x.split /\s+/g
         words.push ""
         words
-
       text = text.split(/[\n\r]+/g).filter(@empty).map(map.bind(this)).reduce (a, b) -> a.concat b
       text.pop()
       text
 
     updateProgress: ->
-      @meta.$progress.css "width", Math.floor(100 / @meta.text.length * (@meta.word + 1)) + "%"
+      @meta.$progress.css "width", 100 / @meta.text.length * (@meta.word) + "%"
       return
 
     getWord: ->
@@ -81,58 +78,59 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
         when word.length < 10 then 2
         when word.length < 14 then 3
         else 4
-
       [
         word.substring 0, pivot
         word.substring pivot, pivot + 1
         word.substring pivot + 1
       ]
 
-    goFrompercent: (percent) ->
-      @meta.word = Math.floor(@meta.words.length / 100 * percent)
-      @updateProgress()
+    goFromPercent: (percent, readNext) ->
+      @meta.word = Math.floor @meta.text.length / 100 * percent
+      @meta.$progress.css "width", percent + "%"
       clearTimeout @meta.nextWordTimeout
-      @readNextWord @meta.wordSpeed
+      @readNextWord @meta.wordSpeed, readNext
       return
 
-    readNextWord: (delay = 0) ->
+    readNextWord: (delay = 0, readNext = true) ->
       return false if @meta.word is @meta.text.length
-
       self = @
       wordSpeed = @meta.wordSpeed
       splitWord = @splitWord @meta.text[@meta.word]
       wordSpeed += (if @meta.text[@meta.word].slice(-1) in [".", ","] then wordSpeed else 0)
       wordSpeed += (if @meta.text[@meta.word] == "" then wordSpeed * 3 else 0)
       wordSpeed += delay
-
       @meta.$left.html splitWord[0]
       @meta.$center.html splitWord[1]
       @meta.$right.html splitWord[2]
-      @updateProgress()
-
       @meta.word++
-
-      @meta.nextWordTimeout = setTimeout(->
-        self.readNextWord()
-        return
-      , wordSpeed)
+      if readNext
+        @updateProgress()
+        @meta.nextWordTimeout = setTimeout(->
+          self.readNextWord()
+          return
+        , wordSpeed)
       return
 
     init: (text, wpm, countdown) ->
-      clearTimeout @meta.nextWordTimeout;
+      clearTimeout @meta.nextWordTimeout
       @meta.word = 0
       @meta.text = @getText text
       @readNextWord(if countdown then @meta.wordSpeed else 0)
       return
 
   dragDown = false
+  progressBarMouseDown = false
   dragOffset =
     x: 0
     y: 0
 
-  shiftySpritz.meta.$progressBar.click (e) ->
-    shiftySpritz.goFrompercent Math.floor(100 / shiftySpritz.meta.$progressBar.width() * (e.pageX - shiftySpritz.meta.$progressBar.offset().left))
+  shiftySpritz.meta.$progressBar.mousedown (e) ->
+    shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * (e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left), false
+    progressBarMouseDown = true
     return
+
+  shiftySpritz.meta.$progressBar.mousemove (e) ->
+    shiftySpritz.meta.$progressSeek.css "left", Math.max(e.pageX - shiftySpritz.meta.$progressBar.offset().left, 6) + "px"
 
   shiftySpritz.meta.$pausePlay.click ->
     shiftySpritz.meta.play = not shiftySpritz.meta.play
@@ -146,10 +144,11 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
     dragOffset =
       x: e.pageX - shiftySpritz.meta.$shiftySpritz.offset().left
       y: e.pageY - shiftySpritz.meta.$shiftySpritz.position().top
-
     return
 
   shiftySpritz.meta.$document.mouseup (e) ->
+    not progressBarMouseDown or shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * Math.max(Math.min(e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left, shiftySpritz.meta.$progressBar.width()), 0), shiftySpritz.meta.play
+    progressBarMouseDown = false
     dragDown = false
     return
 
@@ -158,7 +157,8 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
       shiftySpritz.meta.$shiftySpritz.css
         left: e.pageX - dragOffset.x
         top: e.pageY - dragOffset.y
-
+    if progressBarMouseDown
+      shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * Math.max(Math.min(e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left, shiftySpritz.meta.$progressBar.width()), 0), false
     return
 
   shiftySpritz.meta.$close.click ->

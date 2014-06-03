@@ -53,13 +53,29 @@
       margin 14px 6px 0 0
       border-radius 6px
       height 12px
+      position relative
       width calc(100% - 96px)
       cursor pointer
       float right
- 
+
+      #seek, #progress:after
+        display block
+        border-radius 3px
+        opacity 0
+        background #222
+        height 6px
+        width 6px
+        transition opacity 0.1s linear
+        margin 0 0 0 -3px
+        position absolute
+        top 3px
+
+      &:hover #seek
+        opacity 0.5
+
       #progress
         height 100%
-        min-width 10px
+        min-width 12px
         position relative
         background #bbb
         width 0
@@ -67,14 +83,9 @@
 
         &:after
           content ""
-          display block
-          border-radius 3px
-          height 6px
-          width 6px
-          background #222
-          position absolute
+          opacity 1
           right 3px
-          top 3px
+          margin 0
 
   #words
     background #fff
