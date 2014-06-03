@@ -15,7 +15,9 @@
   font-family "Droid sans"
 
   &:hover #controls
-    display block
+    visibility visible
+    opacity 1
+    transform scale(1, 1)
 
   &.hide
     display none
@@ -34,10 +36,18 @@
 
   #controls
     display block
+    visibility hidden
     width 100%
+    opacity 1
+    position absolute
+    top 100%
+    background inherit
     box-sizing border-box
     height 40px
-    margin 0 0 -10px 0
+    margin 0 0 0 0
+    transition all 0.25s cubic-bezier(0.680, -0.550, 0.265, 1.550)
+    transform scale(1, 0)
+    transform-origin top center
     
     #pause-play
       padding-left 12px
