@@ -1,4 +1,4 @@
-$("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chrome.extension.getURL("index.html"), ->
+$("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"0\"></div>").load(chrome.extension.getURL("index.html"), ->
   getSelectionText = ->
     if window.getSelection
       window.getSelection().toString()
@@ -13,7 +13,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
       wordSpeed: 60000 / 300
       nextWordTimeout: 0
       $document: $(document)
-      $shiftySpritz: $("#shifty-spritz")
+      $shiftySpritz: $(this)
       $words: $("#shifty-spritz #words")
       $left: $("#shifty-spritz #left")
       $center: $("#shifty-spritz #center")
@@ -24,10 +24,10 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
       $pausePlay: $("#shifty-spritz #pause-play")
       $close: $("#shifty-spritz #close")
 
-    showShiftySpritz: ->
+    show: ->
       if shiftySpritz.meta.$shiftySpritz.hasClass("hide")
         $("body").addClass("shifty-spritz").css
-          "margin-top": shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"
+          "margin-top": shiftySpritz.meta.$shiftySpritz.outerHeight() + "px !important"
           position: "relative"
         $("*").each (index, element) ->
           $(element).css "top", $(element).position().top + shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
@@ -40,7 +40,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
       else
         false
 
-    hideShiftySpritz: ->
+    close: ->
       unless shiftySpritz.meta.$shiftySpritz.hasClass("hide")
         $("body").css "margin-top", "0px"
         
@@ -111,11 +111,28 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
         , wordSpeed)
       return
 
+    playPause: ->
+      @meta.$pausePlay.addClass((if @meta.play then "fa-pause" else "fa-play")).removeClass (if not @meta.play then "fa-pause" else "fa-play")
+      clearTimeout @meta.nextWordTimeout
+      not @meta.play or @readNextWord()
+      return
+
+    play: ->
+      @meta.play = true
+      @playPause()
+      return
+
+    pause: ->
+      @meta.play = false
+      @playPause()
+      return
+
     init: (text, wpm, countdown) ->
       clearTimeout @meta.nextWordTimeout
       @meta.word = 0
       @meta.text = @getText text
       @readNextWord(if countdown then @meta.wordSpeed else 0)
+      @play()
       return
 
   dragDown = false
@@ -133,11 +150,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
     shiftySpritz.meta.$progressSeek.css "left", Math.max(e.pageX - shiftySpritz.meta.$progressBar.offset().left, 6) + "px"
 
   shiftySpritz.meta.$pausePlay.click ->
-    shiftySpritz.meta.play = not shiftySpritz.meta.play
-    shiftySpritz.meta.$pausePlay.addClass((if shiftySpritz.meta.play then "fa-pause" else "fa-play")).removeClass (if not shiftySpritz.meta.play then "fa-pause" else "fa-play")
-    clearTimeout shiftySpritz.meta.nextWordTimeout
-    not shiftySpritz.meta.play or shiftySpritz.readNextWord()
-    return
+    if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play() 
 
   shiftySpritz.meta.$words.mousedown (e) ->
     dragDown = true
@@ -162,7 +175,18 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
     return
 
   shiftySpritz.meta.$close.click ->
-    shiftySpritz.hideShiftySpritz()
+    shiftySpritz.close()
+
+  shiftySpritz.meta.$shiftySpritz.focus (e) ->
+    console.log e.target
+
+  shiftySpritz.meta.$shiftySpritz.keydown (e) ->
+    if e.keyCode == 32
+      if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play() 
+      e.preventDefault()
+    else if e.keyCode == 27
+      shiftySpritz.close()
+    console.log e.keyCode
 
   pressedTimeout = undefined
   shiftySpritz.meta.$document.keydown((e) ->
@@ -170,7 +194,8 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\"></div>").load(chro
       pressedTimeout = setTimeout(->
         selectedText = getSelectionText()
         if selectedText.length
-          setTimeout shiftySpritz.init selectedText, 500, shiftySpritz.showShiftySpritz()
+          setTimeout shiftySpritz.init selectedText, 500, shiftySpritz.show()
+          shiftySpritz.meta.$shiftySpritz.focus()
         return
       , 500)
     return
