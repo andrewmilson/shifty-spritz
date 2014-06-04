@@ -1,4 +1,4 @@
-$("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"0\"></div>").load(chrome.extension.getURL("index.html"), ->
+$("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></div>").load(chrome.extension.getURL("index.html"), ->
   getSelectionText = ->
     if window.getSelection
       window.getSelection().toString()
@@ -27,7 +27,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"0\"></d
     show: ->
       if shiftySpritz.meta.$shiftySpritz.hasClass("hide")
         $("body").addClass("shifty-spritz").css
-          "margin-top": shiftySpritz.meta.$shiftySpritz.outerHeight() + "px !important"
+          "margin-top": shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"
           position: "relative"
         $("*").each (index, element) ->
           $(element).css "top", $(element).position().top + shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
