@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         src: [ 'build' ]
       },
       stylesheets: {
-        src: [ 'build/**/*.css', '!build/application.css' ]
+        src: [ 'build/**/*.css' ]
       },
       scripts: {
         src: [ 'build/js/**/*.js' ]
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
     cssmin: {
       build: {
         files: {
-          'build/application.css': [ 'build/**/*.css' ]
+          'build/application.css': [ 'build/css/font-awesome.css', 'build/css/style.css' ]
         }
       }
     },
@@ -130,7 +130,7 @@ module.exports = function(grunt) {
   grunt.registerTask(
     'stylesheets', 
     'Compiles the stylesheets.', 
-    [ 'stylus', 'autoprefixer', 'cssmin', 'clean:stylesheets' ]
+    [ 'stylus', 'autoprefixer', 'cssmin' ]
   );
  
   grunt.registerTask(

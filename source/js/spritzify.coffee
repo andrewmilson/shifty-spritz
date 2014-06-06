@@ -10,7 +10,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       word: 0
       text: {}
       play: true
-      wordSpeed: 60000 / 300
+      wpm: 60000 / 300
       nextWordTimeout: 0
       $document: $(document)
       $shiftySpritz: $(this)
@@ -22,6 +22,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       $progressSeek: $("#shifty-spritz #progress-bar #seek")
       $progress: $("#shifty-spritz #progress-bar #progress")
       $pausePlay: $("#shifty-spritz #pause-play")
+      $settings: $("#shifty-spritz #settings")
       $close: $("#shifty-spritz #close")
 
     show: ->
@@ -88,17 +89,17 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       @meta.word = Math.floor @meta.text.length / 100 * percent
       @meta.$progress.css "width", percent + "%"
       clearTimeout @meta.nextWordTimeout
-      @readNextWord @meta.wordSpeed, readNext
+      @readNextWord @meta.wpm, readNext
       return
 
     readNextWord: (delay = 0, readNext = true) ->
       return false if @meta.word is @meta.text.length
       self = @
-      wordSpeed = @meta.wordSpeed
+      wpm = @meta.wpm
       splitWord = @splitWord @meta.text[@meta.word]
-      wordSpeed += (if @meta.text[@meta.word].slice(-1) in [".", ","] then wordSpeed else 0)
-      wordSpeed += (if @meta.text[@meta.word] == "" then wordSpeed * 3 else 0)
-      wordSpeed += delay
+      wpm += (if @meta.text[@meta.word].slice(-1) in [".", ","] then wpm else 0)
+      wpm += (if @meta.text[@meta.word] == "" then wpm * 3 else 0)
+      wpm += delay
       @meta.$left.html splitWord[0]
       @meta.$center.html splitWord[1]
       @meta.$right.html splitWord[2]
@@ -108,7 +109,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
         @meta.nextWordTimeout = setTimeout(->
           self.readNextWord()
           return
-        , wordSpeed)
+        , wpm)
       return
 
     playPause: ->
@@ -131,7 +132,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       clearTimeout @meta.nextWordTimeout
       @meta.word = 0
       @meta.text = @getText text
-      @readNextWord(if countdown then @meta.wordSpeed else 0)
+      @readNextWord(if countdown then @meta.wpm else 0)
       @play()
       return
 
@@ -140,6 +141,17 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
   dragOffset =
     x: 0
     y: 0
+
+  chrome.storage.sync.get ["wpm", "color"], (value) ->
+    shiftySpritz.meta.wpm = 60000 / value.wpm or 60000 / 300
+    console.log shiftySpritz.meta.wpm
+    shiftySpritz.meta.$center.css "color", value.color or "#fa3d3d"
+    return
+
+  chrome.storage.onChanged.addListener (changes, namespace) ->
+    shiftySpritz.meta.wpm = 60000 / changes.wpm.newValue if changes.wpm
+    shiftySpritz.meta.$center.css "color", changes.color.newValue or shiftySpritz.meta.$center.css "color" if changes.color
+    return
 
   shiftySpritz.meta.$progressBar.mousedown (e) ->
     shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * (e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left), false
@@ -151,6 +163,9 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   shiftySpritz.meta.$pausePlay.click ->
     if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play() 
+
+  shiftySpritz.meta.$settings.click ->
+    chrome.tabs.create({url: "settings.html"});
 
   shiftySpritz.meta.$words.mousedown (e) ->
     dragDown = true
@@ -177,16 +192,12 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
   shiftySpritz.meta.$close.click ->
     shiftySpritz.close()
 
-  shiftySpritz.meta.$shiftySpritz.focus (e) ->
-    console.log e.target
-
   shiftySpritz.meta.$shiftySpritz.keydown (e) ->
     if e.keyCode == 32
       if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play() 
       e.preventDefault()
     else if e.keyCode == 27
       shiftySpritz.close()
-    console.log e.keyCode
 
   pressedTimeout = undefined
   shiftySpritz.meta.$document.keydown((e) ->
