@@ -8,7 +8,6 @@
   left 0
   text-align left
   display block
-  color #bbb
   z-index 2147483647
   position fixed
   user-select none
@@ -26,6 +25,7 @@
   i
     line-height 40px
     cursor pointer
+    color #bbb
     font-size 14px
     padding 0 6px
 
@@ -49,7 +49,7 @@
     transition all 0.25s cubic-bezier(0.680, -0.550, 0.265, 1.550)
     transform scale(1, 0)
     transform-origin top center
-    
+
     #pause-play
       padding-left 12px
 
@@ -102,12 +102,10 @@
     background #fff
     border-bottom none
     height 50px
-    cursor move
     font-weight 500
     font-size 25px
     line-height 50px
     width 100%
-    color #333
     position relative
 
     &:before, &:after
@@ -125,9 +123,10 @@
       border-bottom-color #222
       top 100%
       margin -10px 0 0 0px
-    
+
     #left, #right, #center
       height 100%
+      color #333
       min-height 1px
       float left
       display inline-block

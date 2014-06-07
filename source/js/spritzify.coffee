@@ -33,7 +33,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
         $("*").each (index, element) ->
           $(element).css "top", $(element).position().top + shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
           return
-        @meta.$shiftySpritz.css 
+        @meta.$shiftySpritz.css
           "top": "0"
           "margin-top": "0"
         @meta.$shiftySpritz.removeClass "hide"
@@ -44,7 +44,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     close: ->
       unless shiftySpritz.meta.$shiftySpritz.hasClass("hide")
         $("body").css "margin-top", "0px"
-        
+
         $("*").each (index, element) ->
           $(element).css "top", $(element).position().top - shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
           return
@@ -136,11 +136,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       @play()
       return
 
-  dragDown = false
   progressBarMouseDown = false
-  dragOffset =
-    x: 0
-    y: 0
 
   chrome.storage.sync.get ["wpm", "color"], (value) ->
     shiftySpritz.meta.wpm = 60000 / value.wpm or 60000 / 300
@@ -162,29 +158,17 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     shiftySpritz.meta.$progressSeek.css "left", Math.max(e.pageX - shiftySpritz.meta.$progressBar.offset().left, 6) + "px"
 
   shiftySpritz.meta.$pausePlay.click ->
-    if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play() 
+    if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
 
   shiftySpritz.meta.$settings.click ->
     chrome.tabs.create({url: "settings.html"});
 
-  shiftySpritz.meta.$words.mousedown (e) ->
-    dragDown = true
-    dragOffset =
-      x: e.pageX - shiftySpritz.meta.$shiftySpritz.offset().left
-      y: e.pageY - shiftySpritz.meta.$shiftySpritz.position().top
-    return
-
   shiftySpritz.meta.$document.mouseup (e) ->
     not progressBarMouseDown or shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * Math.max(Math.min(e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left, shiftySpritz.meta.$progressBar.width()), 0), shiftySpritz.meta.play
     progressBarMouseDown = false
-    dragDown = false
     return
 
   shiftySpritz.meta.$document.mousemove (e) ->
-    if dragDown
-      shiftySpritz.meta.$shiftySpritz.css
-        left: e.pageX - dragOffset.x
-        top: e.pageY - dragOffset.y
     if progressBarMouseDown
       shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * Math.max(Math.min(e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left, shiftySpritz.meta.$progressBar.width()), 0), false
     return
@@ -194,7 +178,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   shiftySpritz.meta.$shiftySpritz.keydown (e) ->
     if e.keyCode == 32
-      if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play() 
+      if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
       e.preventDefault()
     else if e.keyCode == 27
       shiftySpritz.close()
