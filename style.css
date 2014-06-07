@@ -73,8 +73,9 @@ hr {
   margin-top: 80px;
   margin-bottom: 80px;
   border: 0;
-  border-top: 1px solid #aaa;
-  border-bottom: 1px solid #fff;
+  /* border-top: 1px solid #aaa;
+  border-bottom: 1px solid #fff; */
+  border-top: solid #ccc 2px;
 }
 
 #download {
@@ -96,36 +97,6 @@ hr {
   font-weight: bold;
 }
 
-/* .btn {
-  display: inline-block;
-  text-decoration: none;
-  padding: 6px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
-
-.btn-default {
-  color: #fff;
-  background-color: #B32D47;
-}
-
-.btn-info {
-  color: #fff;
-  background-color: #0E203B;
-} */
-
 .btn {
   display: inline-block;
   color: #fff;
@@ -138,11 +109,29 @@ hr {
   white-space: nowrap;
   font-weight: bold;
   vertical-align: middle;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   background-image: none;
   border-bottom: rgba(20, 20, 20, 0.15) 5px solid;
 }
 
 .btn-default {
   background-color: #3e5c6d;
+}
+
+.btn-success {
+  color: #333;
+  background-color: #9CCA68;
+}
+
+.btn-danger {
+  color: #333;
+  background-color: #fbca54;
+}
+
+.btn-info {
+  color: #333;
+  background-color: #80ceff;
 }
