@@ -1,0 +1,130 @@
+body, html {
+  padding: 20px;
+  margin: 0;
+  background: #E4E5EB;
+}
+
+* {
+  font-family: 'Droid Sans', sans-serif;
+  text-align: center;
+  color: #333;
+}
+
+.logo {
+  margin: 0 auto 0 auto;
+  background: #80ceff;
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
+}
+
+.container {
+  width: 50%;
+  margin: 0 auto 0 auto;
+}
+
+h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
+  font-size: 40%;
+  color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  line-height: 1.8;
+  color: inherit;
+}
+
+h1, h2, h3 {
+  color: #fc575e;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+h4, h5, h6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 45px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+h4 {
+  font-size: 18px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  font-size: 12px;
+}
+
+hr {
+  height: 0;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border: 0;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #fff;
+}
+
+/* .btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.btn-default {
+  color: #fff;
+  background-color: #B32D47;
+}
+
+.btn-info {
+  color: #fff;
+  background-color: #0E203B;
+} */
+
+.btn {
+  display: inline-block;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  font-weight: bold;
+  vertical-align: middle;
+  user-select: none;
+  background-image: none;
+  border-bottom: rgba(20, 20, 20, 0.15) 5px solid;
+}
+
+.btn-default {
+  background-color: #3e5c6d;
+}
