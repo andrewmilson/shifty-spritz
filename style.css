@@ -1,5 +1,5 @@
 body, html {
-  padding: 40px;
+  padding: 40px 0;
   margin: 0;
   background: #E4E5EB;
   height: 100%;
@@ -14,14 +14,10 @@ body, html {
 
 .logo {
   margin: 0 auto 0 auto;
-  background: #80ceff;
-  width: 80px;
-  height: 80px;
-  border-radius: 40px;
 }
 
 .container {
-  width: 560px;
+  min-width: 560px;
   margin: 0 auto 0 auto;
 }
 
