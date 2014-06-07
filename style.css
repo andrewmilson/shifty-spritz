@@ -1,7 +1,9 @@
 body, html {
-  padding: 20px;
+  padding: 40px;
   margin: 0;
   background: #E4E5EB;
+  height: 100%;
+  max-height: 100%;
 }
 
 * {
@@ -71,8 +73,8 @@ h6 {
 
 hr {
   height: 0;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 80px;
+  margin-bottom: 80px;
   border: 0;
   border-top: 1px solid #aaa;
   border-bottom: 1px solid #fff;
