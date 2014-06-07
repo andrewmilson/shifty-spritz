@@ -78,6 +78,25 @@ hr {
   border-bottom: 1px solid #fff;
 }
 
+#download {
+  list-style: none;
+  margin: 50px;
+  font-size: 150%;
+  padding: 0;
+}
+
+#download li {
+  display: inline;
+  margin: 0 15px;
+}
+
+#download li a {
+  display: inline-block;
+  width: 128px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 /* .btn {
   display: inline-block;
   text-decoration: none;
