@@ -8,9 +8,10 @@
   </head>
   <body>
     <div class="container">
+      <a href="https://github.com/andrewmilson/shifty-spritz/"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
       <img src="images/shifty-spritz.png" alt="Shifty Spritz" id="logo">
       <h1>Shifty Spritz <small>by Andrew Milson</small></h1>
-      <h3 style="color: #333;">Shifty Spritz is a FREE speed reading extension for browsers. It will save you HEAPS of time! Try it out by selecting some text and holding <span class="btn btn-default">shift</span></h3>
+      <h3 style="color: #333;">Shifty Spritz is a FREE Spritz-type speed reader extension for browsers. It will save you HEAPS of time! Try it out by selecting some text and holding <span class="btn btn-default">shift</span></h3>
       <hr>
       <h2>Download <small>you won't regret it!</small></h2>
       <ul id="download">
@@ -27,17 +28,30 @@
       <span>+ Reads selected text</span><br>
       <hr>
       <h2 id="donate">Donate <small>support future projects</small></h2>
-      <form action="">
-        <label><input type="radio" name="price" value="5" > $5</label>
-        <label><input type="radio" name="price" value="20"> $20</label>
-        <label><input type="radio" name="price" value="30"> $30</label>
-        <label><input type="radio" name="price" value="40"> $40</label>
-        <label><input type="radio" name="price" value="50"> $50</label>
-        <label><input type="radio" name="price" value=""> other: $<input type="text"></label>
-        <a style="margin-top: 15px;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=W7MGGUHTPVTF4&lc=NZ&item_name=Shifty%20Spritz&amount=10%2e00&currency_code=NZD&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted" class="btn btn-info" target="_blank">Donate with PayPal</a>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="get" target="_blank">
+        <label><input type="radio" name="amount" value="1" > $1</label>
+        <label><input type="radio" name="amount" value="2" > $2</label>
+        <label><input type="radio" name="amount" value="5" checked> $5</label>
+        <label><input type="radio" name="amount" value="20"> $20</label>
+        <label><input type="radio" name="amount" value="30"> $30</label>
+        <label><input type="radio" name="amount" value="40"> $40</label>
+        <label><input type="radio" name="amount" value="50"> $50</label>
+        <label><input type="radio" name="amount" value=""> other</label>
+        <input type="hidden" name="cmd" value="_donations">
+        <input type="hidden" name="business" value="W7MGGUHTPVTF4">
+        <input type="hidden" name="lc" value="NZ">
+        <input type="hidden" name="item_name" value="Shifty Spritz">
+        <input type="hidden" name="currency_code" value="USD">
+        <input type="hidden" name="no_note" value="1">
+        <input type="hidden" name="no_shipping" value="1">
+        <input type="hidden" name="rm" value="1">
+        <input type="hidden" name="return" value="http://andrewmilson.github.io/shifty-spritz/thanks.html">
+        <input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHosted">
+        <br>
+        <input type="submit" style="margin-top: 15px;" class="btn btn-info" value="Donate with PayPal">
       </form>
       <h3>OR</h3>
-      <h5>Send coins to <br>18Fss3tutE6QMdGDBPmxTqY1fbeb94tWED <br>using Bitcoin</h5>
+      <h5>Send Bitcoin's to this adress <br>18Fss3tutE6QMdGDBPmxTqY1fbeb94tWED</h5>
       <hr>
     </div>
   </body>
