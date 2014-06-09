@@ -1,8 +1,8 @@
 module.exports = function(grunt) {
- 
+
   // configure the tasks
   grunt.initConfig({
- 
+
     copy: {
       build: {
         cwd: 'source',
@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         expand: true
       },
     },
- 
+
     clean: {
       build: {
         src: [ 'build' ]
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         src: [ 'build/js/**/*.js' ]
       },
     },
- 
+
     stylus: {
       build: {
         options: {
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
         }]
       }
     },
- 
+
     autoprefixer: {
       build: {
         expand: true,
@@ -48,15 +48,15 @@ module.exports = function(grunt) {
         dest: 'build'
       }
     },
- 
+
     cssmin: {
       build: {
         files: {
-          'build/application.css': [ 'build/css/font-awesome.css', 'build/css/style.css' ]
+          'build/css/application.css': [ 'build/css/style.css', 'build/css/font-awesome.css', 'build/css/droid-sans.css' ]
         }
       }
     },
- 
+
     coffee: {
       build: {
         expand: true,
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
         ext: '.js'
       }
     },
- 
+
     uglify: {
       build: {
         files: [{
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
         }]
       }
     },
- 
+
     jade: {
       compile: {
         options: {
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
         }]
       }
     },
- 
+
     watch: {
       stylesheets: {
         files: 'source/**/*.styl',
@@ -113,7 +113,7 @@ module.exports = function(grunt) {
     }
 
   });
- 
+
   // load the tasks
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -125,29 +125,29 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jade');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
- 
+
   // define the tasks
   grunt.registerTask(
-    'stylesheets', 
-    'Compiles the stylesheets.', 
+    'stylesheets',
+    'Compiles the stylesheets.',
     [ 'stylus', 'autoprefixer', 'cssmin' ]
   );
- 
+
   grunt.registerTask(
-    'scripts', 
-    'Compiles the JavaScript files.', 
+    'scripts',
+    'Compiles the JavaScript files.',
     [ 'clean:scripts', 'coffee', 'uglify' ]
   );
- 
+
   grunt.registerTask(
-    'build', 
-    'Compiles all of the assets and copies the files to the build directory.', 
+    'build',
+    'Compiles all of the assets and copies the files to the build directory.',
     [ 'clean:build', 'copy', 'stylesheets', 'scripts', 'jade' ]
   );
- 
+
   grunt.registerTask(
-    'default', 
-    'Watches the project for changes, automatically builds them and runs a server.', 
+    'default',
+    'Watches the project for changes, automatically builds them and runs a server.',
     [ 'build', 'watch' ]
   );
 };

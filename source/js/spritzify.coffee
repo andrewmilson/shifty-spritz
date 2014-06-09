@@ -1,4 +1,7 @@
 $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></div>").load(chrome.extension.getURL("index.html"), ->
+  # chrome.tabs.insertCSS(null, {file: "http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"});
+  console.log chrome
+
   getSelectionText = ->
     if window.getSelection
       window.getSelection().toString()
