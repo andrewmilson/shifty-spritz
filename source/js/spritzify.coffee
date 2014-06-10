@@ -100,7 +100,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       self = @
       wpm = @meta.wpm
       splitWord = @splitWord @meta.text[@meta.word]
-      wpm += (if @meta.text[@meta.word].slice(-1) in [".", ","] then wpm else 0)
+      wpm += (if @meta.text[@meta.word].slice(-1) in [".", ",", "!", "?"] then wpm else 0)
       wpm += (if @meta.text[@meta.word] == "" then wpm * 3 else 0)
       wpm += delay
       @meta.$left.html splitWord[0]
