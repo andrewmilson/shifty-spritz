@@ -141,14 +141,21 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   progressBarMouseDown = false
 
-  chrome.storage.sync.get ["wpm", "color"], (value) ->
+  chrome.storage.sync.get ["wpm", "color", "size"], (value) ->
     shiftySpritz.meta.wpm = 60000 / value.wpm or 60000 / 300
-    console.log shiftySpritz.meta.wpm
+    shiftySpritz.meta.$words.css
+      "font-size": parseInt(value.size or 25) + "px"
+      "height": parseInt(value.size or 25) + 25 + "px"
+      "line-height": parseInt(value.size or 25) + 25 + "px"
     shiftySpritz.meta.$center.css "color", value.color or "#fa3d3d"
     return
 
   chrome.storage.onChanged.addListener (changes, namespace) ->
     shiftySpritz.meta.wpm = 60000 / changes.wpm.newValue if changes.wpm
+    if changes.size then shiftySpritz.meta.$words.css
+      "font-size": parseInt(changes.size.newValue or 25) + "px"
+      "height": parseInt(changes.size.newValue or 25) + 25 + "px"
+      "line-height": parseInt(changes.size.newValue or 25) + 25 + "px"
     shiftySpritz.meta.$center.css "color", changes.color.newValue or shiftySpritz.meta.$center.css "color" if changes.color
     return
 
