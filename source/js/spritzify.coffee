@@ -115,15 +115,15 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
         , wpm)
       return
 
-    playPause: ->
+    playPause: (delay) ->
       @meta.$pausePlay.addClass((if @meta.play then "fa-pause" else "fa-play")).removeClass (if not @meta.play then "fa-pause" else "fa-play")
       clearTimeout @meta.nextWordTimeout
-      not @meta.play or @readNextWord()
+      not @meta.play or @readNextWord(delay)
       return
 
-    play: ->
+    play: (delay) ->
       @meta.play = true
-      @playPause()
+      @playPause(delay)
       return
 
     pause: ->
@@ -135,8 +135,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       clearTimeout @meta.nextWordTimeout
       @meta.word = 0
       @meta.text = @getText text
-      @readNextWord(if countdown then @meta.wpm else 0)
-      @play()
+      @play(if countdown then @meta.wpm else 0)
       return
 
   progressBarMouseDown = false
