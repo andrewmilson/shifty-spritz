@@ -14,7 +14,7 @@
   outline none
   font-family "Droid sans"
 
-  &:hover #controls, &:active #controls
+  &:hover #controls-shifty, &:active #controls-shifty
     visibility visible
     opacity 1
     transform scale(1, 1)
@@ -35,7 +35,7 @@
     &.right
       float right
 
-  #controls
+  #controls-shifty
     display block
     visibility hidden
     width 100%
@@ -50,16 +50,16 @@
     transform scale(1, 0)
     transform-origin top center
 
-    #pause-play
+    #pause-play-shifty
       padding-left 12px
 
-    #close
+    #close-shifty
       padding-right 12px
 
-    #pause-play
+    #pause-play-shifty
       margin 0
 
-    #progress-bar
+    #progress-bar-shifty
       background #333
       margin 14px 6px 0 0
       border-radius 6px
@@ -69,7 +69,7 @@
       cursor pointer
       float right
 
-      #seek, #progress:after
+      #seek-shifty, #progress-shifty:after
         display block
         border-radius 3px
         opacity 0
@@ -81,10 +81,10 @@
         position absolute
         top 3px
 
-      &:hover #seek
+      &:hover #seek-shifty
         opacity 0.5
 
-      #progress
+      #progress-shifty
         height 100%
         min-width 12px
         position relative
@@ -98,7 +98,7 @@
           right 3px
           margin 0
 
-  #words
+  #words-shifty
     background #fff
     border-bottom none
     height 50px
@@ -124,16 +124,16 @@
       top 100%
       margin -10px 0 0 0px
 
-    #left, #right, #center
+    #left-shifty, #right-shifty, #center-shifty
       height 100%
       color #333
       min-height 1px
       float left
       display inline-block
 
-    #center
+    #center-shifty
       color #fa3d3d
 
-    #left
+    #left-shifty
       width 30%
       text-align right

@@ -17,16 +17,15 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       nextWordTimeout: 0
       $document: $(document)
       $shiftySpritz: $(this)
-      $words: $("#shifty-spritz #words")
-      $left: $("#shifty-spritz #left")
-      $center: $("#shifty-spritz #center")
-      $right: $("#shifty-spritz #right")
-      $progressBar: $("#shifty-spritz #progress-bar")
-      $progressSeek: $("#shifty-spritz #progress-bar #seek")
-      $progress: $("#shifty-spritz #progress-bar #progress")
-      $pausePlay: $("#shifty-spritz #pause-play")
-      $settings: $("#shifty-spritz #settings")
-      $close: $("#shifty-spritz #close")
+      $words: $("#shifty-spritz #words-shifty")
+      $left: $("#shifty-spritz #left-shifty")
+      $center: $("#shifty-spritz #center-shifty")
+      $right: $("#shifty-spritz #right-shifty")
+      $progressBar: $("#shifty-spritz #progress-bar-shifty")
+      $progressSeek: $("#shifty-spritz #progress-bar-shifty #seek-shifty")
+      $progress: $("#shifty-spritz #progress-bar-shifty #progress-shifty")
+      $pausePlay: $("#shifty-spritz #pause-play-shifty")
+      $close: $("#shifty-spritz #close-shifty")
 
     show: ->
       if shiftySpritz.meta.$shiftySpritz.hasClass("hide")
@@ -168,9 +167,6 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   shiftySpritz.meta.$pausePlay.click ->
     if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
-
-  shiftySpritz.meta.$settings.click ->
-    chrome.tabs.create({url: "settings.html"});
 
   shiftySpritz.meta.$document.mouseup (e) ->
     not progressBarMouseDown or shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * Math.max(Math.min(e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left, shiftySpritz.meta.$progressBar.width()), 0), shiftySpritz.meta.play
