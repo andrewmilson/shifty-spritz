@@ -1,12 +1,14 @@
 $(->
   $wpmSelect = $("#wpm-select")
   $sizeSelect = $("#size-select")
+  $styleSelect = $("#style-select")
   $colorSelect = $("#color-select")
 
-  chrome.storage.sync.get ["wpm", "color", "size"], (value) ->
+  chrome.storage.sync.get ["wpm", "color", "size", "style"], (value) ->
     $wpmSelect.val value.wpm or "300"
     $sizeSelect.val value.size or "25"
     $colorSelect.val value.color or "#fa3d3d"
+    $styleSelect.val value.style or "normal"
     return
 
   $wpmSelect.change ->
@@ -20,4 +22,8 @@ $(->
   $sizeSelect.change ->
     chrome.storage.sync.set
       size: $sizeSelect.val()
+
+  $styleSelect.change ->
+    chrome.storage.sync.set
+      style: $styleSelect.val()
 )

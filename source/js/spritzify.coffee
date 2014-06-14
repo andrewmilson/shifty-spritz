@@ -138,12 +138,13 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   progressBarMouseDown = false
 
-  chrome.storage.sync.get ["wpm", "color", "size"], (value) ->
+  chrome.storage.sync.get ["wpm", "color", "size", "style"], (value) ->
     shiftySpritz.meta.wpm = 60000 / value.wpm or 60000 / 300
     shiftySpritz.meta.$words.css
       "font-size": parseInt(value.size or 25) + "px"
       "height": parseInt(value.size or 25) + 25 + "px"
       "line-height": parseInt(value.size or 25) + 25 + "px"
+      "font-weight": value.style or "normal"
     shiftySpritz.meta.$center.css "color", value.color or "#fa3d3d"
     return
 
@@ -153,6 +154,8 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       "font-size": parseInt(changes.size.newValue or 25) + "px"
       "height": parseInt(changes.size.newValue or 25) + 25 + "px"
       "line-height": parseInt(changes.size.newValue or 25) + 25 + "px"
+    if changes.style then shiftySpritz.meta.$words.css
+      "font-weight": changes.style.newValue or "normal"
     shiftySpritz.meta.$center.css "color", changes.color.newValue or shiftySpritz.meta.$center.css "color" if changes.color
     return
 
