@@ -3,7 +3,6 @@
   background #222
   border-top 10px solid transparent
   border-bottom 10px solid transparent
-  box-sizing border-box
   top 0
   left 0
   text-align left
@@ -13,6 +12,10 @@
   user-select none
   outline none
   font-family "Droid sans"
+  box-sizing border-box
+
+  *
+    box-sizing border-box
 
   &:hover #controls-shifty, &:active #controls-shifty
     visibility visible
@@ -107,31 +110,34 @@
     width 100%
     position relative
 
-    &:before, &:after
-      content ""
-      display block
-      border 5px solid transparent
-      position absolute
-      left calc(30% + 0px)
-
-    &:after
-      border-top-color #222
-      top 0
-
-    &:before
-      border-bottom-color #222
-      top 100%
-      margin -10px 0 0 0px
-
     #left-shifty, #right-shifty, #center-shifty
       height 100%
       color #333
       min-height 1px
       float left
-      display inline-block
+      display inline
 
     #center-shifty
       color #fa3d3d
+      display block
+      position relative
+
+      &:before, &:after
+        content ""
+        display block
+        border 5px solid transparent
+        position absolute
+        left 50%
+
+      &:after
+        border-top-color #222
+        top 0
+        margin 0 0 0 -5px
+
+      &:before
+        border-bottom-color #222
+        top 100%
+        margin -10px 0 0 -5px
 
     #left-shifty
       width 30%

@@ -93,6 +93,11 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       @readNextWord @meta.wpm, readNext
       return
 
+    updateWordPositioning: ->
+      @meta.$center.css "margin-left", -@meta.$center.width() / 2 + "px"
+      @meta.$left.css "padding-right", @meta.$center.width() / 2 + "px"
+      console.log()
+
     readNextWord: (delay = 0, readNext = true) ->
       return false if @meta.word is @meta.text.length
       self = @
@@ -102,8 +107,9 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       wpm += (if @meta.text[@meta.word] == "" then wpm * 3 else 0)
       wpm += delay
       @meta.$left.html splitWord[0]
-      @meta.$center.html splitWord[1]
+      @meta.$center.html(splitWord[1])
       @meta.$right.html splitWord[2]
+      @updateWordPositioning()
       @meta.word++
       if readNext
         @updateProgress()
@@ -157,6 +163,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     if changes.style then shiftySpritz.meta.$words.css
       "font-weight": changes.style.newValue or "normal"
     shiftySpritz.meta.$center.css "color", changes.color.newValue or shiftySpritz.meta.$center.css "color" if changes.color
+    shiftySpritz.updateWordPositioning()
     return
 
   shiftySpritz.meta.$progressBar.mousedown (e) ->
