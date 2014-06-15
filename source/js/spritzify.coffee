@@ -150,7 +150,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       "font-size": parseInt(value.size or 25) + "px"
       "height": parseInt(value.size or 25) + 25 + "px"
       "line-height": parseInt(value.size or 25) + 25 + "px"
-      "font-weight": value.style or "normal"
+      "font-weight": value.style or "bold"
       "font-family": value.font or "'droid sans'"
     shiftySpritz.meta.$center.css "color", value.color or "#fa3d3d"
     return
@@ -162,7 +162,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       "height": parseInt(changes.size.newValue or 25) + 25 + "px"
       "line-height": parseInt(changes.size.newValue or 25) + 25 + "px"
     if changes.style then shiftySpritz.meta.$words.css
-      "font-weight": changes.style.newValue or "normal"
+      "font-weight": changes.style.newValue or "bold"
     if changes.font then shiftySpritz.meta.$words.css
       "font-family": changes.font.newValue or "'droid sans'"
     shiftySpritz.meta.$center.css "color", changes.color.newValue or shiftySpritz.meta.$center.css "color" if changes.color

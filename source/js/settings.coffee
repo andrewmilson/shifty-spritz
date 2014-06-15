@@ -9,7 +9,7 @@ $(->
     $wpmSelect.val value.wpm or "300"
     $sizeSelect.val value.size or "25"
     $colorSelect.val value.color or "#fa3d3d"
-    $styleSelect.val value.style or "normal"
+    $styleSelect.val value.style or "bold"
     $fontSelect.val value.font or "'Droid sans'"
     return
 
