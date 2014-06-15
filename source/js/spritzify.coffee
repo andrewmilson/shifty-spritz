@@ -1,6 +1,4 @@
 $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></div>").load(chrome.extension.getURL("index.html"), ->
-  console.log chrome
-
   getSelectionText = ->
     if window.getSelection
       window.getSelection().toString()
@@ -16,6 +14,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       nextWordTimeout: 0
       $document: $(document)
       $shiftySpritz: $(this)
+      $countdown: $("#shifty-spritz #countdown-shifty")
       $words: $("#shifty-spritz #words-shifty")
       $left: $("#shifty-spritz #left-shifty")
       $center: $("#shifty-spritz #center-shifty")
@@ -103,8 +102,8 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       self = @
       wpm = @meta.wpm
       splitWord = @splitWord @meta.text[@meta.word]
-      wpm += (if @meta.text[@meta.word].slice(-1) in [".", ",", "!", "?"] then wpm else 0)
-      wpm += (if @meta.text[@meta.word] == "" then wpm * 3 else 0)
+      wpm += (if @meta.text[@meta.word].slice(-1) in [".", ",", "!", "?"] then @meta.wpm else 0)
+      wpm += (if @meta.text[@meta.word] == "" then @meta.wpm * 3 else 0)
       wpm += delay
       @meta.$left.html splitWord[0]
       @meta.$center.html(splitWord[1])
@@ -136,10 +135,19 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       return
 
     init: (text, wpm, countdown) ->
+      @meta.$countdown.css
+        "opacity": 0.3
+        "left": 0
+        "width": "100%"
+      @meta.$countdown.animate(
+        "opacity": 0.1
+        "left": "30%"
+        "width": 0
+      , 500)
       clearTimeout @meta.nextWordTimeout
       @meta.word = 0
       @meta.text = @getText text
-      @play(if countdown then @meta.wpm else 0)
+      @play(500)
       return
 
   progressBarMouseDown = false
