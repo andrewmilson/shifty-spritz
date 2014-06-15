@@ -16,15 +16,16 @@ $(function() {
       nextWordTimeout: 0,
       $document: $(document),
       $shiftySpritz: $("#shifty-spritz"),
-      $words: $("#shifty-spritz #words"),
-      $left: $("#shifty-spritz #left"),
-      $center: $("#shifty-spritz #center"),
-      $right: $("#shifty-spritz #right"),
-      $progressBar: $("#shifty-spritz #progress-bar"),
-      $progressSeek: $("#shifty-spritz #progress-bar #seek"),
-      $progress: $("#shifty-spritz #progress-bar #progress"),
-      $pausePlay: $("#shifty-spritz #pause-play"),
-      $close: $("#shifty-spritz #close")
+      $countdown: $("#shifty-spritz #countdown-shifty"),
+      $words: $("#shifty-spritz #words-shifty"),
+      $left: $("#shifty-spritz #left-shifty"),
+      $center: $("#shifty-spritz #center-shifty"),
+      $right: $("#shifty-spritz #right-shifty"),
+      $progressBar: $("#shifty-spritz #progress-bar-shifty"),
+      $progressSeek: $("#shifty-spritz #progress-bar-shifty #seek-shifty"),
+      $progress: $("#shifty-spritz #progress-bar-shifty #progress-shifty"),
+      $pausePlay: $("#shifty-spritz #pause-play-shifty"),
+      $close: $("#shifty-spritz #close-shifty")
     },
     show: function() {
       if (shiftySpritz.meta.$shiftySpritz.hasClass("hide")) {
@@ -108,6 +109,11 @@ $(function() {
       clearTimeout(this.meta.nextWordTimeout);
       this.readNextWord(this.meta.wpm, readNext);
     },
+    updateWordPositioning: function() {
+      this.meta.$center.css("margin-left", -this.meta.$center.width() / 2 + "px");
+      this.meta.$left.css("padding-right", this.meta.$center.width() / 2 + "px");
+      return console.log();
+    },
     readNextWord: function(delay, readNext) {
       var self, splitWord, wpm, _ref;
       if (delay == null) {
@@ -122,12 +128,13 @@ $(function() {
       self = this;
       wpm = this.meta.wpm;
       splitWord = this.splitWord(this.meta.text[this.meta.word]);
-      wpm += ((_ref = this.meta.text[this.meta.word].slice(-1)) === "." || _ref === "," || _ref === "!" || _ref === "?" ? wpm : 0);
-      wpm += (this.meta.text[this.meta.word] === "" ? wpm * 3 : 0);
+      wpm += ((_ref = this.meta.text[this.meta.word].slice(-1)) === "." || _ref === "," || _ref === "!" || _ref === "?" ? this.meta.wpm : 0);
+      wpm += (this.meta.text[this.meta.word] === "" ? this.meta.wpm * 3 : 0);
       wpm += delay;
       this.meta.$left.html(splitWord[0]);
       this.meta.$center.html(splitWord[1]);
       this.meta.$right.html(splitWord[2]);
+      this.updateWordPositioning();
       this.meta.word++;
       if (readNext) {
         this.updateProgress();
@@ -150,10 +157,20 @@ $(function() {
       this.playPause();
     },
     init: function(text, wpm, countdown) {
+      this.meta.$countdown.css({
+        "opacity": 0.3,
+        "left": 0,
+        "width": "100%"
+      });
+      this.meta.$countdown.animate({
+        "opacity": 0.1,
+        "left": "30%",
+        "width": 0
+      }, 500);
       clearTimeout(this.meta.nextWordTimeout);
       this.meta.word = 0;
       this.meta.text = this.getText(text);
-      this.play(countdown ? this.meta.wpm : 0);
+      this.play(500);
     }
   };
   progressBarMouseDown = false;
@@ -210,4 +227,4 @@ $(function() {
   }).keyup(function(e) {
     clearTimeout(pressedTimeout);
   });
-})
+});
