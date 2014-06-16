@@ -19,20 +19,85 @@
       ga('create', 'UA-51793300-1', 'andrewmilson.github.io');
       ga('send', 'pageview');
     </script>
+    <script>
+      $(function() {
+        $("#chrome-download").click(function() {
+          $("#download-completion").fadeIn(500);
+        });
+        $("#download-completion-dissmiss").click(function() {
+          $("#download-completion").fadeOut(500);
+        });
+      });
+    </script>
   </head>
   <body>
-    <div id="shifty-spritz" class="hide" tabindex="1"><div id="words-shifty"><div id="countdown-shifty"></div><div id="left-shifty">h</div><div id="center-shifty">e</div><div id="right-shifty">llo</div></div><div id="controls-shifty"><i id="pause-play-shifty" class="fa fa-pause left"></i><i id="close-shifty" class="fa fa-times right"></i><div id="progress-bar-shifty"><div id="progress-shifty"></div><div id="seek-shifty"></div></div></div></div>
+    <div id="shifty-spritz" class="hide" tabindex="1">
+      <div id="words-shifty">
+        <div id="countdown-shifty"></div>
+        <div id="left-shifty">h</div>
+        <div id="center-shifty">e</div>
+        <div id="right-shifty">llo</div>
+      </div>
+      <div id="controls-shifty">
+        <i id="pause-play-shifty" class="fa fa-pause left"></i>
+        <i id="close-shifty" class="fa fa-times right"></i>
+        <div id="progress-bar-shifty">
+          <div id="progress-shifty"></div>
+          <div id="seek-shifty"></div>
+        </div>
+      </div>
+    </div>
+    <div id="social-media">
+      <!-- twitter share -->
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://andrewmilson.github.io/shifty-spritz/" data-text="Just downloaded an awesome speed reading extension that saves me heaps of time" data-via="AndrewMilson">Tweet</a>
+      <script>
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+      </script>
+      <br>
+      <!-- facebook share -->
+      <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fandrewmilson.github.io%2Fshifty-spritz%2F&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21&amp;appId=572951446136755" scrolling="no" frameborder="0" style="border:none; margin:10px 0; overflow:hidden; height:21px; width:150px;" allowTransparency="true"></iframe>
+      <br>
+      <!-- google share -->
+      <div class="g-plusone" data-size="medium" data-href="http://andrewmilson.github.io/shifty-spritz/"></div>
+      <br>
+      <!-- GitHub star -->
+      <iframe src="http://ghbtns.com/github-btn.html?user=andrewmilson&repo=shifty-spritz&type=watch&count=true" height="30" width="118" frameborder="0" scrolling="0" style="width:118px; height: 30px; margin-top: 10px;" allowTransparency="true"></iframe>
+    </div>
+    <div id="download-completion">
+      <i class="fa fa-times fa-lg" id="download-completion-dissmiss"></i>
+      <div class="inner">
+        <h1>Hey! <small>dude</small></h1>
+        <h4>thats an awesome speed reading extension your about to download. <br>It's gonna save you heaps of time! <br>How about helping your friends save some time?</h4>
+        <!-- twitter share -->
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://andrewmilson.github.io/shifty-spritz/" data-text="Just downloaded an awesome speed reading extension that saves me heaps of time" data-via="AndrewMilson">Tweet</a>
+        <script>
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+        </script>
+        <br>
+        <!-- facebook share -->
+        <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fandrewmilson.github.io%2Fshifty-spritz%2F&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21&amp;appId=572951446136755" scrolling="no" frameborder="0" style="border:none; margin:10px 0; overflow:hidden; height:21px; width:150px;" allowTransparency="true"></iframe>
+        <br>
+        <!-- google share -->
+        <div class="g-plusone" data-size="medium" data-href="http://andrewmilson.github.io/shifty-spritz/"></div>
+        <script type="text/javascript">
+          (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/platform.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+          })();
+        </script>
+      </div>
+    </div>
     <div class="container">
-      <a href="https://github.com/andrewmilson/shifty-spritz"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
       <img src="images/shifty-spritz.png" alt="Shifty Spritz" id="logo">
       <h1>Shifty Spritz <small>by Andrew Milson</small></h1>
       <h3 style="color: #333;">Shifty Spritz is a FREE Spritz-type speed reader extension for browsers. It will save you HEAPS of time! Try it out on this page by selecting some text and holding <span class="btn btn-default">shift</span></h3>
-      <iframe style="margin: 30px 0 0 0;" width="560" height="350" src="http://www.youtube.com/embed/uuFa_5xlwR8?autohide=1" frameborder="0" allowfullscreen></iframe>
+      <iframe style="margin: 30px 0 0 0;" width="560" height="350" src="//www.youtube.com/embed/uuFa_5xlwR8?autohide=1" frameborder="0" allowfullscreen></iframe>
       <hr>
       <h2>Download <small>its FREE and you won&#39;t regret it!</small></h2>
       <ul id="download">
         <li>
-          <a href="https://chrome.google.com/webstore/detail/shifty-spritz/aibmmfofaeipbiaocgabhobgedbfdiih"><img src="images/chrome.png" alt="Chrome"><span>Chrome Extension</span></a>
+          <a href="https://chrome.google.com/webstore/detail/shifty-spritz/aibmmfofaeipbiaocgabhobgedbfdiih" id="chrome-download" target="_blank"><img src="images/chrome.png" alt="Chrome"><span>Chrome Extension</span></a>
         </li>
         <li>
           <a href=""><img src="images/firefox-coming-soon-edit.png" alt="Firefox" onclick="return false"><span style="color: #666;">Firefox Extension</span></a>
@@ -40,7 +105,7 @@
       </ul>
       <hr>
       <h2>About <small>Shifty Spritz</small></h2>
-      <p>Shifty Spritz is an extremely crude implementation of <a href="http://www.spritzinc.com/">Spritz</a>. I made it because I struggle reading fast. I found that the Spritz reader was perfect for me as I was able to read fast and with great comprehension. Although I found that <a href="http://www.spritzinc.com/">Spritz</a> and similar readers where to clunky and slow, so I decided to spin up my own. Shifty Spritz speed reader is open source and you can view all the code on <a href="https://github.com/andrewmilson/shifty-spritz">GitHub</a>. I hope you love using it as much as I do!</p>
+      <p>Shifty Spritz is an extremely crude implementation of <a href="http://www.spritzinc.com/" target="_blank">Spritz</a>. I made it because I struggle reading fast. I found that the Spritz reader was perfect for me as I was able to read fast and with great comprehension. Although I found that <a href="http://www.spritzinc.com/" target="_blank">Spritz</a> and similar readers where to clunky and slow, so I decided to spin up my own. Shifty Spritz speed reader is open source and you can view all the code on <a href="https://github.com/andrewmilson/shifty-spritz" target="_blank">GitHub</a>. I hope you love using it as much as I do!</p>
       <h2>Benefits <small>They are. Superb!</small></h2>
       <p>
         + WPM selector<br>

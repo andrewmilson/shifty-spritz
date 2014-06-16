@@ -12,6 +12,42 @@ body {
   color: #333;
 }
 
+#download-completion {
+  display: none;
+  position: fixed;
+  z-index: 123456;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: #E4E5EB;
+}
+
+#download-completion #download-completion-dissmiss {
+  position: absolute;
+  right: 30px;
+  cursor: pointer;
+  top: 30px;
+}
+
+#download-completion .inner {
+  height: 350px;
+  width: 800px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -175px;
+  margin-left: -400px;
+}
+
+#social-media {
+  position: fixed;
+  left: 30px;
+  bottom: 20px;
+  text-align: left;
+}
+
 .logo {
   margin: 0 auto 0 auto;
 }
