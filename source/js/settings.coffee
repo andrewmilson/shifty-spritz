@@ -4,13 +4,15 @@ $(->
   $fontSelect = $("#font-select")
   $styleSelect = $("#style-select")
   $colorSelect = $("#color-select")
+  $enableCheckbox = $("#enable-checkbox")
 
-  chrome.storage.sync.get ["wpm", "color", "size", "style", "font"], (value) ->
+  chrome.storage.sync.get ["wpm", "color", "size", "style", "font", "enable"], (value) ->
     $wpmSelect.val value.wpm or "300"
     $sizeSelect.val value.size or "25"
     $colorSelect.val value.color or "#fa3d3d"
     $styleSelect.val value.style or "bold"
     $fontSelect.val value.font or "'Droid sans'"
+    $enableCheckbox.attr "checked", value.enable or true
     return
 
   $wpmSelect.change ->
@@ -32,4 +34,8 @@ $(->
   $fontSelect.change ->
     chrome.storage.sync.set
       font: $fontSelect.val()
+
+  $enableCheckbox.change ->
+    chrome.storage.sync.set
+      enable: $enableCheckbox.is(":checked")
 )

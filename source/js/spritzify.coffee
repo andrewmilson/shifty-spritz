@@ -8,6 +8,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
   shiftySpritz =
     meta:
       word: 0
+      enable: true
       text: {}
       play: true
       wpm: 60000 / 300
@@ -152,7 +153,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   progressBarMouseDown = false
 
-  chrome.storage.sync.get ["wpm", "color", "size", "style", "font"], (value) ->
+  chrome.storage.sync.get ["wpm", "color", "size", "style", "font", "enable"], (value) ->
     shiftySpritz.meta.wpm = 60000 / value.wpm or 60000 / 300
     shiftySpritz.meta.$words.css
       "font-size": parseInt(value.size or 25) + "px"
@@ -161,6 +162,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       "font-weight": value.style or "bold"
       "font-family": value.font or "'droid sans'"
     shiftySpritz.meta.$center.css "color", value.color or "#fa3d3d"
+    shiftySpritz.meta.enable = (if typeof value.enable is "undefined" then true else !!value.enable)
     return
 
   chrome.storage.onChanged.addListener (changes, namespace) ->
@@ -175,6 +177,9 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       "font-family": changes.font.newValue or "'droid sans'"
     shiftySpritz.meta.$center.css "color", changes.color.newValue or shiftySpritz.meta.$center.css "color" if changes.color
     shiftySpritz.updateWordPositioning()
+    if changes.enable
+      shiftySpritz.meta.enable = !!changes.enable.newValue
+      shiftySpritz.close()
     return
 
   shiftySpritz.meta.$progressBar.mousedown (e) ->
@@ -210,7 +215,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   pressedTimeout = undefined
   shiftySpritz.meta.$document.keydown((e) ->
-    if e.shiftKey
+    if e.shiftKey && shiftySpritz.meta.enable
       pressedTimeout = setTimeout(->
         selectedText = getSelectionText()
         if selectedText.length

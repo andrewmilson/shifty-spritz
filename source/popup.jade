@@ -32,7 +32,10 @@ html
     h4 Settings
     form
       .form-group
-        label Words per minute (wpm)
+        label(for="enable-checkbox") enable
+        input#enable-checkbox(type="checkbox", checked="")
+      .form-group
+        label(for="wpm-select") Words per minute (wpm)
         select#wpm-select(name="wpm")
           option(value="50") 50 (that is a poor effort)
           option(value="100") 100 (don&#39;t worry you will get faster)
@@ -61,14 +64,14 @@ html
           option(value="999999999999999") 999999999999999 (um. I&#39;m gonna go clean up my pants)
           option(value="89230547547814031578623874506715231890985764819874678175698765170") 89230547547814031578623874506715231890985764819874678175698765170 (no comment)
       .form-group
-        label Reader size
+        label(for="size-select") Reader size
         select#size-select(name="size")
           option(value="20") small
           option(value="25") medium
           option(value="30") large
           option(value="40") EXTRA LARGE
       .form-group
-        label Font
+        label(for="font-select") Font
         select#font-select(name="font")
           option(value="'Droid sans'") Droid Sans (default)
           option(value="Georgia, serif") Georgia
@@ -77,12 +80,12 @@ html
           option(value="Verdana, Geneva, sans-serif") Verdana
           option(value="'Courier New', Courier, monospace") Corier New
       .form-group
-        label Font style
+        label(for="style-select") Font style
         select#style-select(name="style")
           option(value="normal") none
           option(value="bold") bold
       .form-group
-        label Center letter color
+        label(for="color-select") Center letter color
         select#color-select(name="color")
           option(value="#fa3d3d") red
           option(value="#2990FC") blue
