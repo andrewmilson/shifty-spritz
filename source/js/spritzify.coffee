@@ -203,29 +203,17 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * Math.max(Math.min(e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left, shiftySpritz.meta.$progressBar.width()), 0), false
     return
 
-  shiftySpritz.meta.$close.click ->
-    shiftySpritz.close()
-
-  shiftySpritz.meta.$shiftySpritz.keydown (e) ->
-    if e.keyCode == 32
-      if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
-      e.preventDefault()
-    else if e.keyCode == 27
-      shiftySpritz.close()
-
   pressedTimeout = undefined
-  shiftySpritz.meta.$document.keydown((e) ->
-    if e.shiftKey && shiftySpritz.meta.enable
-      pressedTimeout = setTimeout(->
-        selectedText = getSelectionText()
-        if selectedText.length
-          setTimeout shiftySpritz.init selectedText, 500, shiftySpritz.show()
-          shiftySpritz.meta.$shiftySpritz.focus()
-        return
-      , 500)
-    return
-  ).keyup (e) ->
-    clearTimeout pressedTimeout
+  shiftySpritz.meta.$document.keydown (e) ->
+    selectedText = getSelectionText()
+    if not $("input, textarea").is ":focus"
+      if e.shiftKey and e.keyCode is 83 and shiftySpritz.meta.enable and selectedText.length
+        shiftySpritz.init selectedText, 500, shiftySpritz.show()
+      else if e.shiftKey and e.keyCode is 32
+        if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
+        e.preventDefault()
+      else if e.keyCode is 27
+        shiftySpritz.close()
     return
 
   return

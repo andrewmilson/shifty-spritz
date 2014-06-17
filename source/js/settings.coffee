@@ -12,7 +12,7 @@ $(->
     $colorSelect.val value.color or "#fa3d3d"
     $styleSelect.val value.style or "bold"
     $fontSelect.val value.font or "'Droid sans'"
-    $enableCheckbox.attr "checked", value.enable or true
+    $enableCheckbox.attr "checked", (if typeof value.enable is "undefined" then true else !!value.enable)
     return
 
   $wpmSelect.change ->
