@@ -138,11 +138,11 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
     init: (text, wpm) ->
       @meta.$countdown.css
-        "opacity": 0.3
+        "opacity": 1
         "left": 0
         "width": "100%"
       @meta.$countdown.animate(
-        "opacity": 0.1
+        "opacity": 0
         "left": "30%"
         "width": 0
       , @meta.delay)

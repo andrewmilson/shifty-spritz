@@ -1,8 +1,9 @@
 #shifty-spritz
   width 100%
-  background #222
-  border-top 10px solid transparent
-  border-bottom 10px solid transparent
+  background #ccc
+  border-color #ccc
+  border-top 10px solid #ccc
+  border-bottom 10px solid #ccc
   top 0
   left 0
   text-align left
@@ -10,6 +11,7 @@
   z-index 2147483647
   position fixed
   user-select none
+  transition border-color 0.2s cubic-bezier(0.785, 0.135, 0.150, 0.860), background 0.2s cubic-bezier(0.785, 0.135, 0.150, 0.860)
   outline none
   font-family "Droid sans"
   box-sizing border-box
@@ -17,10 +19,15 @@
   *
     box-sizing border-box
 
+  &:hover, &:active
+    border-color #222
+    background #222
+
   &:hover #controls-shifty, &:active #controls-shifty
     visibility visible
     opacity 1
-    transform scale(1, 1)
+    bottom -40px
+    // transform scale(1, 1)
 
   &.hide
     display none
@@ -44,13 +51,14 @@
     width 100%
     opacity 1
     position absolute
-    top 100%
+    bottom 0px
     background inherit
     box-sizing border-box
     height 40px
     margin 0 0 0 0
-    transition all 0.25s cubic-bezier(0.680, -0.550, 0.265, 1.550)
-    transform scale(1, 0)
+    // transition all 0.25s cubic-bezier(0.680, -0.550, 0.265, 1.550)
+    transition bottom 0.2s cubic-bezier(0.785, 0.135, 0.150, 0.860), visibility 0.2s cubic-bezier(0.785, 0.135, 0.150, 0.860)
+    // transform scale(1, 0)
     transform-origin top center
 
     #pause-play-shifty
@@ -107,14 +115,17 @@
     height 50px
     font-size 25px
     font-weight bold
+    z-index 1
     line-height 50px
     width 100%
+    border-color inherit
     position relative
 
     #countdown-shifty
       height 100%
       position absolute
-      background #222
+      background #ccc
+      z-index -1
       left 0
       top 0
 
@@ -127,6 +138,7 @@
       display inline
 
     #center-shifty
+      border-color inherit
       color #fa3d3d
       display block
       position relative
@@ -139,12 +151,12 @@
         left 50%
 
       &:after
-        border-top-color #222
+        border-top-color inherit
         top 0
         margin 0 0 0 -5px
 
       &:before
-        border-bottom-color #222
+        border-bottom-color inherit
         top 100%
         margin -10px 0 0 -5px
 
