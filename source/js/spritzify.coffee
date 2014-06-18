@@ -96,7 +96,6 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     updateWordPositioning: ->
       @meta.$center.css "margin-left", -@meta.$center.width() / 2 + "px"
       @meta.$left.css "padding-right", @meta.$center.width() / 2 + "px"
-      console.log()
 
     readNextWord: (delay = 0, readNext = true) ->
       return false if @meta.word is @meta.text.length
@@ -204,16 +203,23 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     return
 
   pressedTimeout = undefined
+  date = new Date().getTime()
+  newDate = 0
+  timeDiff = 0
   shiftySpritz.meta.$document.keydown (e) ->
+    console.log e
     selectedText = getSelectionText()
-    if not $("input, textarea").is ":focus"
-      if e.shiftKey and e.keyCode is 83 and shiftySpritz.meta.enable and selectedText.length
+    if e.shiftKey and e.keyCode is 16
+      date = newDate
+      newDate = new Date().getTime()
+      timeDiff = newDate - date
+      if timeDiff < 350 and shiftySpritz.meta.enable and selectedText.length
         shiftySpritz.init selectedText, 500, shiftySpritz.show()
-      else if e.shiftKey and e.keyCode is 32
-        if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
-        e.preventDefault()
-      else if e.keyCode is 27
-        shiftySpritz.close()
+    else if e.keyCode is 27
+      shiftySpritz.close()
+    else if e.shiftKey and e.keyCode is 32 and not shiftySpritz.meta.$shiftySpritz.hasClass("hide")
+      if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
+      e.preventDefault()
     return
 
   return

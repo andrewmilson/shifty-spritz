@@ -16,14 +16,14 @@ html
     hr
     h4 Instructions
     span(style="margin: 5px 0; display: block;")
-      span(style="font-weight: bold;") If it's not working
+      strong If it's not working
       = " "
       | try refreshing the page. Note that it will not work on PDF's or some websites. I am very sorry for this although chrome does not give me the permmision to do so.
 
     span.btn.dark.key shift
-    = " + "
-    span.btn.dark.key s
-    = " press on selected text to start reading"
+    = " "
+    strong double press
+    = " on selected text to start reading"
     br
     span.btn.dark.key shift
     = " + "
@@ -88,6 +88,19 @@ html
         select#style-select(name="style")
           option(value="normal") none
           option(value="bold") bold
+      .form-group
+        label(for="style-select") Start delay
+        select#delay-select(name="delay")
+          option 0.1 seconds
+          option 0.2 seconds
+          option 0.3 seconds
+          option 0.4 seconds
+          option 0.5 seconds
+          option 0.6 seconds
+          option 0.7 seconds
+          option 0.8 seconds
+          option 0.9 seconds
+          option 1.0 seconds
       .form-group
         label(for="color-select") Center letter color
         select#color-select(name="color")
