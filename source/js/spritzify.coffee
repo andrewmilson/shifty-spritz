@@ -1,9 +1,9 @@
 $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></div>").load(chrome.extension.getURL("index.html"), ->
-  getSelectionText = ->
-    if window.getSelection
-      window.getSelection().toString()
-    else document.selection.createRange().text if document.selection and document.selection.type isnt "Control"
-    else ""
+  # getSelectionText = ->
+  #   if window.getSelection
+  #     window.getSelection().toString()
+  #   else document.selection.createRange().text if document.selection and document.selection.type isnt "Control"
+  #   else ""
 
   shiftySpritz =
     meta:
@@ -103,7 +103,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       wpm = @meta.wpm
       splitWord = @splitWord @meta.text[@meta.word]
       wpm += (if @meta.text[@meta.word].slice(-1) in [".", ",", "!", "?"] then @meta.wpm else 0)
-      wpm += (if @meta.text[@meta.word] == "" then @meta.wpm * 3 else 0)
+      wpm += (if @meta.text[@meta.word] is "" then @meta.wpm * 3 else 0)
       wpm += delay
       @meta.$left.html splitWord[0]
       @meta.$center.html(splitWord[1])
@@ -206,9 +206,8 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
   date = new Date().getTime()
   newDate = 0
   timeDiff = 0
-  shiftySpritz.meta.$document.keydown (e) ->
-    console.log e
-    selectedText = getSelectionText()
+  shiftySpritz.meta.$document.on "keydown", (e) ->
+    selectedText = window.getSelection().toString()
     if e.shiftKey and e.keyCode is 16
       date = newDate
       newDate = new Date().getTime()
