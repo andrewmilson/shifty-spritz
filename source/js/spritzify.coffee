@@ -217,7 +217,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
   pressedTimeout = 0
   newDate = 0
   timeDiff = 0
-  shiftySpritz.meta.$document.on "keydown", (e) ->
+  shiftySpritz.meta.$document.keydown (e) ->
     selectedText = window.getSelection().toString()
     if e.shiftKey and e.keyCode is 16
       unless shiftySpritz.meta.understoodChanges
@@ -241,7 +241,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       newDate = 0
     return
 
-  shiftySpritz.meta.$document.on "keyup", (e) ->
+  shiftySpritz.meta.$document.keyup (e) ->
     clearTimeout pressedTimeout
 
   return
