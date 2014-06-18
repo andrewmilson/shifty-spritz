@@ -13,6 +13,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       play: true
       wpm: 60000 / 300
       nextWordTimeout: 0
+      understoodChanges: false
       $document: $(document)
       $shiftySpritz: $(this)
       $countdown: $("#shifty-spritz #countdown-shifty")
@@ -152,7 +153,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   progressBarMouseDown = false
 
-  chrome.storage.sync.get ["wpm", "color", "size", "style", "font", "enable"], (value) ->
+  chrome.storage.sync.get ["wpm", "color", "size", "style", "font", "enable", "understoodChanges"], (value) ->
     shiftySpritz.meta.wpm = 60000 / value.wpm or 60000 / 300
     shiftySpritz.meta.$words.css
       "font-size": parseInt(value.size or 25) + "px"
@@ -162,6 +163,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       "font-family": value.font or "'droid sans'"
     shiftySpritz.meta.$center.css "color", value.color or "#fa3d3d"
     shiftySpritz.meta.enable = (if typeof value.enable is "undefined" then true else !!value.enable)
+    shiftySpritz.meta.understoodChanges = !!value.understoodChanges
     return
 
   chrome.storage.onChanged.addListener (changes, namespace) ->
@@ -179,6 +181,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     if changes.enable
       shiftySpritz.meta.enable = !!changes.enable.newValue
       shiftySpritz.close()
+    shiftySpritz.meta.understoodChanges = !!changes.understoodChanges.newValue if changes.understoodChanges
     return
 
   shiftySpritz.meta.$progressBar.mousedown (e) ->
@@ -204,15 +207,23 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   pressedTimeout = undefined
   date = new Date().getTime()
+  pressedTimeout = 0
   newDate = 0
   timeDiff = 0
   shiftySpritz.meta.$document.on "keydown", (e) ->
     selectedText = window.getSelection().toString()
     if e.shiftKey and e.keyCode is 16
+      unless shiftySpritz.meta.understoodChanges
+        pressedTimeout = setTimeout(->
+          shiftySpritz.meta.understoodChanges = confirm "Sorry for the inconvenience but Shifty Spritz has changed the hot key to start reading and to pause and play. To start reading, double tap shift on some selected text. To pause and play press shift + space together. If you click OK you will never see this message again!"
+          chrome.storage.sync.set
+            understoodChanges: shiftySpritz.meta.understoodChanges
+        , 500)
       date = newDate
       newDate = new Date().getTime()
       timeDiff = newDate - date
       if timeDiff < 350 and shiftySpritz.meta.enable and selectedText.length
+        newDate = 0
         shiftySpritz.init selectedText, 500, shiftySpritz.show()
     else if e.keyCode is 27
       shiftySpritz.close()
@@ -220,6 +231,9 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
       e.preventDefault()
     return
+
+  shiftySpritz.meta.$document.on "keyup", (e) ->
+    clearTimeout pressedTimeout
 
   return
 )
