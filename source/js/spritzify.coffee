@@ -198,6 +198,9 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
   shiftySpritz.meta.$pausePlay.click ->
     if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
 
+  shiftySpritz.meta.$close.click ->
+    shiftySpritz.close()
+
   shiftySpritz.meta.$document.mouseup (e) ->
     not progressBarMouseDown or shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * Math.max(Math.min(e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left, shiftySpritz.meta.$progressBar.width()), 0), shiftySpritz.meta.play
     progressBarMouseDown = false
@@ -207,6 +210,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     if progressBarMouseDown
       shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * Math.max(Math.min(e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left, shiftySpritz.meta.$progressBar.width()), 0), false
     return
+
 
   pressedTimeout = undefined
   date = new Date().getTime()
@@ -218,7 +222,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     if e.shiftKey and e.keyCode is 16
       unless shiftySpritz.meta.understoodChanges
         pressedTimeout = setTimeout(->
-          shiftySpritz.meta.understoodChanges = confirm "Sorry for the inconvenience but Shifty Spritz has changed the hot key to start reading and to pause and play. To start reading, double tap shift on some selected text. To pause and play press shift + space together. If you click OK you will never see this message again!"
+          shiftySpritz.meta.understoodChanges = confirm "Sorry for the inconvenience but I have changed the Shifty Spritz hot key's. To start reading, double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press SHIFT + ESC together If you click OK you will never see this message again!"
           chrome.storage.sync.set
             understoodChanges: shiftySpritz.meta.understoodChanges
         , 500)
@@ -228,11 +232,13 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       if timeDiff < 350 and shiftySpritz.meta.enable and selectedText.length
         newDate = 0
         shiftySpritz.init selectedText, 500, shiftySpritz.show()
-    else if e.keyCode is 27
+    else if e.shiftKey and e.keyCode is 27
       shiftySpritz.close()
     else if e.shiftKey and e.keyCode is 32 and not shiftySpritz.meta.$shiftySpritz.hasClass("hide")
       if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
       e.preventDefault()
+    unless e.shiftKey
+      newDate = 0
     return
 
   shiftySpritz.meta.$document.on "keyup", (e) ->
