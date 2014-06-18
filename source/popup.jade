@@ -36,9 +36,6 @@ html
     h4 Settings
     form
       .form-group
-        label(for="enable-checkbox") enable
-        input#enable-checkbox(type="checkbox", checked="")
-      .form-group
         label(for="wpm-select") Words per minute (wpm)
         select#wpm-select(name="wpm")
           option(value="50") 50 (that is a poor effort)
@@ -91,16 +88,16 @@ html
       .form-group
         label(for="style-select") Start delay
         select#delay-select(name="delay")
-          option 0.1 seconds
-          option 0.2 seconds
-          option 0.3 seconds
-          option 0.4 seconds
-          option 0.5 seconds
-          option 0.6 seconds
-          option 0.7 seconds
-          option 0.8 seconds
-          option 0.9 seconds
-          option 1.0 seconds
+          option(value="100") 0.1 seconds
+          option(value="200") 0.2 seconds
+          option(value="300") 0.3 seconds
+          option(value="400") 0.4 seconds
+          option(value="500") 0.5 seconds
+          option(value="600") 0.6 seconds
+          option(value="700") 0.7 seconds
+          option(value="800") 0.8 seconds
+          option(value="900") 0.9 seconds
+          option(value="1000") 1.0 seconds
       .form-group
         label(for="color-select") Center letter color
         select#color-select(name="color")
@@ -111,3 +108,6 @@ html
           option(value="#f49400") orange
           option(value="#fdff00") yellow
           option(value="#fa3dcc") pink
+      .form-group
+        label(for="enable-checkbox") enable
+        input#enable-checkbox(type="checkbox", checked="")

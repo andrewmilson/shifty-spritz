@@ -7,13 +7,13 @@ $(->
   $delaySelect = $("#delay-select")
   $enableCheckbox = $("#enable-checkbox")
 
-  chrome.storage.sync.get ["wpm", "color", "size", "style", "font", "enable"], (value) ->
+  chrome.storage.sync.get ["wpm", "color", "size", "style", "font", "delay", "enable"], (value) ->
     $wpmSelect.val value.wpm or "300"
     $sizeSelect.val value.size or "25"
     $colorSelect.val value.color or "#fa3d3d"
     $styleSelect.val value.style or "bold"
     $fontSelect.val value.font or "'Droid sans'"
-    $delaySelect.val calue.delay or 500
+    $delaySelect.val value.delay or 500
     $enableCheckbox.attr "checked", (if typeof value.enable is "undefined" then true else !!value.enable)
     return
 

@@ -13,6 +13,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       play: true
       wpm: 60000 / 300
       nextWordTimeout: 0
+      delay: 500
       understoodChanges: false
       $document: $(document)
       $shiftySpritz: $(this)
@@ -107,7 +108,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       wpm += (if @meta.text[@meta.word] is "" then @meta.wpm * 3 else 0)
       wpm += delay
       @meta.$left.html splitWord[0]
-      @meta.$center.html(splitWord[1])
+      @meta.$center.html splitWord[1]
       @meta.$right.html splitWord[2]
       @updateWordPositioning()
       @meta.word++
@@ -122,12 +123,12 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     playPause: (delay) ->
       @meta.$pausePlay.addClass((if @meta.play then "fa-pause" else "fa-play")).removeClass (if not @meta.play then "fa-pause" else "fa-play")
       clearTimeout @meta.nextWordTimeout
-      not @meta.play or @readNextWord(delay)
+      not @meta.play or @readNextWord delay
       return
 
     play: (delay) ->
       @meta.play = true
-      @playPause(delay)
+      @playPause delay
       return
 
     pause: ->
@@ -135,7 +136,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       @playPause()
       return
 
-    init: (text, wpm, countdown) ->
+    init: (text, wpm) ->
       @meta.$countdown.css
         "opacity": 0.3
         "left": 0
@@ -144,16 +145,16 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
         "opacity": 0.1
         "left": "30%"
         "width": 0
-      , 500)
+      , @meta.delay)
       clearTimeout @meta.nextWordTimeout
       @meta.word = 0
       @meta.text = @getText text
-      @play(500)
+      @play @meta.delay
       return
 
   progressBarMouseDown = false
 
-  chrome.storage.sync.get ["wpm", "color", "size", "style", "font", "enable", "understoodChanges"], (value) ->
+  chrome.storage.sync.get ["wpm", "color", "size", "style", "font", "enable", "delay", "understoodChanges"], (value) ->
     shiftySpritz.meta.wpm = 60000 / value.wpm or 60000 / 300
     shiftySpritz.meta.$words.css
       "font-size": parseInt(value.size or 25) + "px"
@@ -164,6 +165,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     shiftySpritz.meta.$center.css "color", value.color or "#fa3d3d"
     shiftySpritz.meta.enable = (if typeof value.enable is "undefined" then true else !!value.enable)
     shiftySpritz.meta.understoodChanges = !!value.understoodChanges
+    shiftySpritz.meta.delay = parseInt(value.delay or 500)
     return
 
   chrome.storage.onChanged.addListener (changes, namespace) ->
@@ -182,6 +184,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       shiftySpritz.meta.enable = !!changes.enable.newValue
       shiftySpritz.close()
     shiftySpritz.meta.understoodChanges = !!changes.understoodChanges.newValue if changes.understoodChanges
+    shiftySpritz.meta.delay = parseInt(changes.delay.newValue or 500) if changes.delay
     return
 
   shiftySpritz.meta.$progressBar.mousedown (e) ->
