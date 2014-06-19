@@ -206,7 +206,7 @@ $(function() {
       if (e.shiftKey && e.keyCode === 16) {
         if (!shiftySpritz.meta.understoodChanges) {
           pressedTimeout = setTimeout(function() {
-            shiftySpritz.meta.understoodChanges = confirm("Sorry for the inconvenience but I have changed the Shifty Spritz hotkeys. To start reading double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press SHIFT + ESC together. If you click OK you will probably never see this message again!");
+            shiftySpritz.meta.understoodChanges = confirm("Sorry for the inconvenience but I have changed the Shifty Spritz hotkeys. To start reading double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press ESC. If you click OK you will probably never see this message again!");
           }, 500);
         }
         date = newDate;
@@ -217,7 +217,7 @@ $(function() {
           shiftySpritz.show();
           shiftySpritz.init(selectedText, 500);
         }
-      } else if (e.shiftKey && e.keyCode === 27) {
+      } else if (e.keyCode === 27) {
         shiftySpritz.close();
       } else if (e.shiftKey && e.keyCode === 32 && !shiftySpritz.meta.$shiftySpritz.hasClass("hide")) {
         if (shiftySpritz.meta.play) {
