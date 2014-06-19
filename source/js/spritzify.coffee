@@ -222,7 +222,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     if e.shiftKey and e.keyCode is 16
       unless shiftySpritz.meta.understoodChanges
         pressedTimeout = setTimeout(->
-          shiftySpritz.meta.understoodChanges = confirm "Sorry for the inconvenience but I have changed the Shifty Spritz hot key's. To start reading, double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press SHIFT + ESC together If you click OK you will never see this message again!"
+          shiftySpritz.meta.understoodChanges = confirm "Sorry for the inconvenience but I have changed the Shifty Spritz hotkeys. To start reading double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press SHIFT + ESC together. If you click OK you will probably never see this message again!"
           chrome.storage.sync.set
             understoodChanges: shiftySpritz.meta.understoodChanges
         , 500)
@@ -231,7 +231,8 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       timeDiff = newDate - date
       if timeDiff < 350 and shiftySpritz.meta.enable and selectedText.length
         newDate = 0
-        shiftySpritz.init selectedText, 500, shiftySpritz.show()
+        shiftySpritz.show()
+        shiftySpritz.init selectedText, 500
     else if e.shiftKey and e.keyCode is 27
       shiftySpritz.close()
     else if e.shiftKey and e.keyCode is 32 and not shiftySpritz.meta.$shiftySpritz.hasClass("hide")

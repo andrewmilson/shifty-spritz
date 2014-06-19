@@ -27,7 +27,6 @@
     visibility visible
     opacity 1
     bottom -40px
-    // transform scale(1, 1)
 
   &.hide
     display none
@@ -56,9 +55,7 @@
     box-sizing border-box
     height 40px
     margin 0 0 0 0
-    // transition all 0.25s cubic-bezier(0.680, -0.550, 0.265, 1.550)
     transition bottom 0.2s cubic-bezier(0.785, 0.135, 0.150, 0.860), visibility 0.2s cubic-bezier(0.785, 0.135, 0.150, 0.860)
-    // transform scale(1, 0)
     transform-origin top center
 
     #pause-play-shifty
@@ -77,6 +74,7 @@
       position relative
       width calc(100% - 70px)
       cursor pointer
+      border-radius 6px
       float right
 
       #seek-shifty, #progress-shifty:after
@@ -96,6 +94,7 @@
 
       #progress-shifty
         height 100%
+        border-radius 6px
         min-width 12px
         position relative
         background #bbb
