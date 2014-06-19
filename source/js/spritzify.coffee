@@ -211,7 +211,6 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       shiftySpritz.goFromPercent 100 / shiftySpritz.meta.$progressBar.width() * Math.max(Math.min(e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left, shiftySpritz.meta.$progressBar.width()), 0), false
     return
 
-
   pressedTimeout = undefined
   date = new Date().getTime()
   pressedTimeout = 0
@@ -222,7 +221,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
     if e.shiftKey and e.keyCode is 16
       unless shiftySpritz.meta.understoodChanges
         pressedTimeout = setTimeout(->
-          shiftySpritz.meta.understoodChanges = confirm "Sorry for the inconvenience but I have changed the Shifty Spritz hotkeys. To start reading double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press SHIFT + ESC together. If you click OK you will probably never see this message again!"
+          shiftySpritz.meta.understoodChanges = confirm "Sorry for the inconvenience but I have changed the Shifty Spritz hotkeys. To start reading double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press ESC. If you click OK you will probably never see this message again!"
           chrome.storage.sync.set
             understoodChanges: shiftySpritz.meta.understoodChanges
         , 500)
@@ -233,7 +232,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
         newDate = 0
         shiftySpritz.show()
         shiftySpritz.init selectedText, 500
-    else if e.shiftKey and e.keyCode is 27
+    else if e.keyCode is 27
       shiftySpritz.close()
     else if e.shiftKey and e.keyCode is 32 and not shiftySpritz.meta.$shiftySpritz.hasClass("hide")
       if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
