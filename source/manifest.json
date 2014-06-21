@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Shifty Spritz",
-  "description": "Easy to use Spritz-type speed reader. Just select text and hold down shift!",
+  "description": "Easy to use Spritz-type speed reader. Just select text and double tap shift!",
   "version": "2.1",
   "browser_action": {
     "default_icon": "images/icon.png",
