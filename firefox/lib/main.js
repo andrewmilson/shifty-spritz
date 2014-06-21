@@ -1,7 +1,15 @@
-var buttons = require('sdk/ui/button/action');
-var tabs = require("sdk/tabs");
+var { ToggleButton } = require('sdk/ui/button/toggle');
+var panels = require("sdk/panel");
+var self = require("sdk/self");
 
-var button = buttons.ActionButton({
+var panel = panels.Panel({
+  contentURL: self.data.url("panel.html"),
+  onHide: handleHide,
+  width: 420,
+  height: 600
+});
+
+var button = ToggleButton({
   id: "shifty-spritz-popup",
   label: "Shifty Spritz",
   icon: {
@@ -12,6 +20,16 @@ var button = buttons.ActionButton({
   onClick: handleClick
 });
 
+
+// Show the panel when the user clicks the button.
 function handleClick(state) {
-  tabs.open("https://www.mozilla.org/");
+  if (state.checked) {
+    panel.show({
+      position: button
+    });
+  }
+}
+
+function handleHide() {
+  button.state('window', {checked: false});
 }
