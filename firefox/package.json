@@ -1,9 +1,9 @@
 {
-  "name": "firefox",
-  "title": "firefox",
+  "name": "Shifty Spritz",
+  "title": "shifty-spritz",
   "id": "jid1-IFtbJ8f1xCRXow",
-  "description": "a basic add-on",
-  "author": "",
+  "description": "Easy to use Spritz-type speed reader. Just select text and double tap shift!",
+  "author": "Andrew Milson",
   "license": "MPL 2.0",
-  "version": "0.1"
+  "version": "2.2"
 }
