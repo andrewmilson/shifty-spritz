@@ -19,6 +19,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       $shiftySpritz: $(this)
       $countdown: $("#shifty-spritz #countdown-shifty")
       $words: $("#shifty-spritz #words-shifty")
+      $wordDivs: $("#shifty-spritz #words-shifty div")
       $left: $("#shifty-spritz #left-shifty")
       $center: $("#shifty-spritz #center-shifty")
       $right: $("#shifty-spritz #right-shifty")
@@ -156,7 +157,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   chrome.storage.sync.get ["wpm", "color", "size", "style", "font", "enable", "delay", "understoodChanges"], (value) ->
     shiftySpritz.meta.wpm = 60000 / value.wpm or 60000 / 300
-    shiftySpritz.meta.$words.css
+    shiftySpritz.meta.$wordDivs.css
       "font-size": parseInt(value.size or 25) + "px"
       "height": parseInt(value.size or 25) + 25 + "px"
       "line-height": parseInt(value.size or 25) + 25 + "px"
@@ -170,13 +171,13 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
   chrome.storage.onChanged.addListener (changes, namespace) ->
     shiftySpritz.meta.wpm = 60000 / changes.wpm.newValue if changes.wpm
-    if changes.size then shiftySpritz.meta.$words.css
+    if changes.size then shiftySpritz.meta.$wordDivs.css
       "font-size": parseInt(changes.size.newValue or 25) + "px"
       "height": parseInt(changes.size.newValue or 25) + 25 + "px"
       "line-height": parseInt(changes.size.newValue or 25) + 25 + "px"
-    if changes.style then shiftySpritz.meta.$words.css
+    if changes.style then shiftySpritz.meta.$wordDivs.css
       "font-weight": changes.style.newValue or "bold"
-    if changes.font then shiftySpritz.meta.$words.css
+    if changes.font then shiftySpritz.meta.$wordDivs.css
       "font-family": changes.font.newValue or "'droid sans'"
     shiftySpritz.meta.$center.css "color", changes.color.newValue or shiftySpritz.meta.$center.css "color" if changes.color
     shiftySpritz.updateWordPositioning()
