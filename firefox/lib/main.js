@@ -1,13 +1,31 @@
-var { ToggleButton } = require('sdk/ui/button/toggle');
-var panels = require("sdk/panel");
-var self = require("sdk/self");
+var { ToggleButton } = require('sdk/ui/button/toggle')
+  , panels = require("sdk/panel")
+  , self = require("sdk/self")
+  , ports = []
+  , ss = require("sdk/simple-storage");
+
+// ss.storage = ss.storage || {}
+
+ss.storage.wpm = ss.storage.wpm || "300";
+ss.storage.delay = ss.storage.delay || 500;
+ss.storage.style = ss.storage.style || "bold";
+ss.storage.size = ss.storage.size || "25";
+ss.storage.color = ss.storage.color || "#fa3d3d";
+ss.storage.font = ss.storage.font || "'Droid sans'";
+ss.storage.enable = (typeof ss.enable == "undefined" ? true : !!ss.storage.enable);
 
 var panel = panels.Panel({
   contentURL: self.data.url("panel.html"),
+  contentScriptFile: [
+    self.data.url('js/jquery.js'),
+    self.data.url('js/settings.js')
+  ],
   onHide: handleHide,
   width: 420,
   height: 600
 });
+
+panel.port.emit("set-settings", ss.storage);
 
 require("sdk/tabs").activeTab.attach({
   contentScript: 'document.body.style.border = "5px solid red";'
@@ -24,6 +42,18 @@ var button = ToggleButton({
   onClick: handleClick
 });
 
+panel.port.on('settings-update', function(message) {
+  console.log("recived loud and clear");
+
+  for (var attrname in message) {
+    ss.storage[attrname] = message[attrname];
+  }
+
+  for (var i=0; i<ports.length; i++) {
+    ports[i].emit('settings-update', ss.storage);
+  }
+});
+
 exports.main = function() {
   var pageMod = require("sdk/page-mod");
 
@@ -33,15 +63,28 @@ exports.main = function() {
     contentStyleFile: [
       self.data.url("css/style.css"),
       self.data.url("css/font-awesome.css")
-      /*"http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css",
-      "http://fonts.googleapis.com/css?family=Droid+Sans:400,700"*/
     ],
     contentScriptFile: [
       self.data.url("js/jquery.js"),
       self.data.url("js/spritzify.js")
     ],
-    onAttach: function onAttach(worker) {
-      worker.postMessage("Hello World");
+    onAttach: function(worker) {
+      ports.push(worker.port);
+      worker.port.emit("settings-update", ss.storage);
+
+      worker.on('detach', function() {
+        var index = ports.indexOf(worker.port);
+        if (index > -1)
+          ports.splice(index, 1);
+      });
+
+      worker.on('pageshow', function() { ports.push(worker.port); });
+
+      worker.on('pagehide', function() {
+        var index = ports.indexOf(worker.port);
+        if (index !== -1)
+          ports.splice(index, 1);
+      });
     }
   });
 };

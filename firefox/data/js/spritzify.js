@@ -1,5 +1,4 @@
-(function() {
-  $("body").prepend("<div id='shifty-spritz' class='hide' tabindex='1'><div id='words-shifty'><div id='countdown-shifty'></div><div id='left-shifty'>h</div><div id='center-shifty'>e</div><div id='right-shifty'>llo</div></div><div id='controls-shifty'><i id='pause-play-shifty' class='fa fa-pause left'></i><i id='close-shifty' class='fa fa-times right'></i><div id='progress-bar-shifty'><div id='progress-shifty'></div><div id='seek-shifty'></div></div></div></div>");
+  $("body").prepend("<div id='shifty-spritz' class='hide' tabindex='1'><div id='words-shifty'><div id='countdown-shifty'></div><div id='left-shifty'>h</div><div id='center-shifty'>e</div><div id='right-shifty'>llo</div></div><div id='controls-shifty'><i id='pause-play-shifty' class='fa fa-pause left-shifty'></i><i id='close-shifty' class='fa fa-times right-shifty'></i><div id='progress-bar-shifty'><div id='progress-shifty'></div><div id='seek-shifty'></div></div></div></div>");
   var date, newDate, pressedTimeout, progressBarMouseDown, shiftySpritz, timeDiff;
   shiftySpritz = {
     meta: {
@@ -15,6 +14,7 @@
       $shiftySpritz: $("#shifty-spritz"),
       $countdown: $("#shifty-spritz #countdown-shifty"),
       $words: $("#shifty-spritz #words-shifty"),
+      $wordDivs: $("#shifty-spritz #words-shifty div"),
       $left: $("#shifty-spritz #left-shifty"),
       $center: $("#shifty-spritz #center-shifty"),
       $right: $("#shifty-spritz #right-shifty"),
@@ -107,7 +107,7 @@
       this.readNextWord(this.meta.wpm, readNext);
     },
     updateWordPositioning: function() {
-      this.meta.$center.css("margin-left", -this.meta.$center.width() / 2 + "px");
+      this.meta.$center.css("margin-left", -1 * this.meta.$center.width() / 2 + "px");
       return this.meta.$left.css("padding-right", this.meta.$center.width() / 2 + "px");
     },
     readNextWord: function(delay, readNext) {
@@ -169,6 +169,21 @@
       this.play(this.meta.delay);
     }
   };
+  self.port.on('settings-update', function(message) {
+    shiftySpritz.meta.wpm = 60000 / message.wpm;
+    shiftySpritz.meta.$wordDivs.css({
+      "font-size": parseInt(message.size) + "px",
+      "height": parseInt(message.size) + 25 + "px",
+      "line-height": parseInt(message.size) + 25 + "px",
+      "font-weight": message.style,
+      "font-family": message.font
+    });
+    shiftySpritz.updateWordPositioning();
+    shiftySpritz.meta.$center.css("color", message.color);
+    shiftySpritz.meta.delay = parseInt(message.delay);
+    shiftySpritz.meta.enable = !!message.enable;
+    shiftySpritz.meta.enable || shiftySpritz.close();
+  });
   progressBarMouseDown = false;
   shiftySpritz.meta.$progressBar.mousedown(function(e) {
     shiftySpritz.goFromPercent(100 / shiftySpritz.meta.$progressBar.width() * (e.pageX + 6 - shiftySpritz.meta.$progressBar.offset().left), false);
@@ -184,7 +199,6 @@
       return shiftySpritz.play();
     }
   });
-  console.log("we ave liftof");
   shiftySpritz.meta.$close.click(function() {
     return shiftySpritz.close();
   });
@@ -236,5 +250,3 @@
   shiftySpritz.meta.$document.keyup(function(e) {
     return clearTimeout(pressedTimeout);
   });
-
-})();

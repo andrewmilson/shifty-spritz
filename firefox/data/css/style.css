@@ -65,22 +65,23 @@
   cursor: pointer;
   color: #bbb;
   font-size: 14px;
+  margin: 0;
   padding: 0 6px;
 }
 
-/* line 41 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 42 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
-#shifty-spritz i.left {
+#shifty-spritz i.left-shifty {
   float: left;
 }
 
-/* line 44 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 45 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
-#shifty-spritz i.right {
+#shifty-spritz i.right-shifty {
   float: right;
 }
 
-/* line 47 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 48 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #controls-shifty {
   display: block;
@@ -101,25 +102,25 @@
   transform-origin: top center;
 }
 
-/* line 61 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 62 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #controls-shifty #pause-play-shifty {
   padding-left: 12px;
 }
 
-/* line 64 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 65 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #controls-shifty #close-shifty {
   padding-right: 12px;
 }
 
-/* line 67 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 68 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #controls-shifty #pause-play-shifty {
   margin: 0;
 }
 
-/* line 70 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 71 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #controls-shifty #progress-bar-shifty {
   background: #333;
@@ -133,7 +134,7 @@
   float: right;
 }
 
-/* line 80 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 81 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #controls-shifty #progress-bar-shifty #seek-shifty,
 #shifty-spritz #controls-shifty #progress-bar-shifty #progress-shifty:after {
@@ -150,13 +151,13 @@
   top: 3px;
 }
 
-/* line 92 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 93 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #controls-shifty #progress-bar-shifty:hover #seek-shifty {
   opacity: 0.5;
 }
 
-/* line 95 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 96 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #controls-shifty #progress-bar-shifty #progress-shifty {
   height: 100%;
@@ -167,7 +168,7 @@
   width: 0;
 }
 
-/* line 103 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 104 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #controls-shifty #progress-bar-shifty #progress-shifty:after {
   content: "";
@@ -176,12 +177,11 @@
   margin: 0;
 }
 
-/* line 109 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 110 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #words-shifty {
   background: #fff;
   border-bottom: none;
-  height: 50px;
   font-size: 25px;
   font-weight: bold;
   z-index: 1;
@@ -193,6 +193,14 @@
 
 /* line 121 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
+#shifty-spritz #words-shifty:after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+/* line 126 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+
 #shifty-spritz #words-shifty #countdown-shifty {
   height: 100%;
   position: absolute;
@@ -202,7 +210,7 @@
   top: 0;
 }
 
-/* line 129 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 134 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #words-shifty #left-shifty,
 #shifty-spritz #words-shifty #right-shifty,
@@ -215,7 +223,7 @@
   display: inline;
 }
 
-/* line 137 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 142 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #words-shifty #center-shifty {
   border-color: inherit;
@@ -224,7 +232,7 @@
   position: relative;
 }
 
-/* line 143 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 148 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #words-shifty #center-shifty:before,
 #shifty-spritz #words-shifty #center-shifty:after {
@@ -235,7 +243,7 @@
   left: 50%;
 }
 
-/* line 150 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 155 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #words-shifty #center-shifty:after {
   border-top-color: inherit;
@@ -243,7 +251,7 @@
   margin: 0 0 0 -5px;
 }
 
-/* line 155 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 160 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #words-shifty #center-shifty:before {
   border-bottom-color: inherit;
@@ -251,7 +259,7 @@
   margin: -10px 0 0 -5px;
 }
 
-/* line 160 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
+/* line 165 : /Users/andrew/Documents/dev/web/shifty/master/source/css/style.styl */
 
 #shifty-spritz #words-shifty #left-shifty {
   width: 30%;

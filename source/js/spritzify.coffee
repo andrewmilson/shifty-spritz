@@ -1,9 +1,4 @@
 $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></div>").load(chrome.extension.getURL("index.html"), ->
-  # getSelectionText = ->
-  #   if window.getSelection
-  #     window.getSelection().toString()
-  #   else document.selection.createRange().text if document.selection and document.selection.type isnt "Control"
-  #   else ""
 
   shiftySpritz =
     meta:
