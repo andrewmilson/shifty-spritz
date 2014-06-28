@@ -4,6 +4,7 @@
   "id": "jid1-IFtbJ8f1xCRXow",
   "description": "Easy to use Spritz-type speed reader. Just select text and double tap shift!",
   "author": "Andrew Milson",
-  "license": "MPL 2.0",
-  "version": "2.2"
+  "homepage": "http://andrewmilson.github.io/shifty-spritz/"
+  "license": "MIT",
+  "version": "2.3"
 }
