@@ -62,6 +62,7 @@ exports.main = function() {
     contentScriptWhen: 'end',
     contentStyleFile: [
       self.data.url("css/style.css"),
+      self.data.url("css/droid-sans.css"),
       self.data.url("css/font-awesome.css")
     ],
     contentScriptFile: [
