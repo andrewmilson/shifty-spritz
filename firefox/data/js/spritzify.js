@@ -179,6 +179,7 @@
       "font-family": message.font
     });
     shiftySpritz.updateWordPositioning();
+    shiftySpritz.meta.understoodChanges = message.understoodChanges;
     shiftySpritz.meta.$center.css("color", message.color);
     shiftySpritz.meta.delay = parseInt(message.delay);
     shiftySpritz.meta.enable = !!message.enable;
@@ -223,6 +224,7 @@
       if (!shiftySpritz.meta.understoodChanges) {
         pressedTimeout = setTimeout(function() {
           shiftySpritz.meta.understoodChanges = confirm("Sorry for the inconvenience but I have changed the Shifty Spritz hotkeys. To start reading double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press ESC. If you click OK you will probably never see this message again!");
+          self.port.emit('settings-update', {understoodChanges: shiftySpritz.meta.understoodChanges});
         }, 500);
       }
       date = newDate;

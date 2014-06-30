@@ -42,9 +42,7 @@ var button = ToggleButton({
   onClick: handleClick
 });
 
-panel.port.on('settings-update', function(message) {
-  console.log("recived loud and clear");
-
+function settingsUpdate(message) {
   for (var attrname in message) {
     ss.storage[attrname] = message[attrname];
   }
@@ -52,7 +50,9 @@ panel.port.on('settings-update', function(message) {
   for (var i=0; i<ports.length; i++) {
     ports[i].emit('settings-update', ss.storage);
   }
-});
+}
+
+panel.port.on('settings-update', settingsUpdate);
 
 exports.main = function() {
   var pageMod = require("sdk/page-mod");
@@ -78,6 +78,8 @@ exports.main = function() {
         if (index > -1)
           ports.splice(index, 1);
       });
+
+      worker.port.on("settings-update", function(message) { settingsUpdate(message); })
 
       worker.on('pageshow', function() { ports.push(worker.port); });
 
