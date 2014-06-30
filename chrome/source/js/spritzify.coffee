@@ -92,8 +92,10 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       return
 
     updateWordPositioning: ->
-      @meta.$center.css "margin-left", -@meta.$center.width() / 2 + "px"
-      @meta.$left.css "padding-right", @meta.$center.width() / 2 + "px"
+      offset = $(window).width() % 2
+      @meta.$center.css "margin-left", -(@meta.$center.width() + offset) / 2 + "px"
+      @meta.$left.css "padding-right", (@meta.$center.width() + offset) / 2 + "px"
+      return
 
     readNextWord: (delay = 0, readNext = true) ->
       return false if @meta.word is @meta.text.length

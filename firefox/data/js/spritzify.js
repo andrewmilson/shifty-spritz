@@ -1,4 +1,4 @@
-  $("body").prepend("<div id='shifty-spritz' class='hide' tabindex='1'><div id='words-shifty'><div id='countdown-shifty'></div><div id='left-shifty'>h</div><div id='center-shifty'>e</div><div id='right-shifty'>llo</div></div><div id='controls-shifty'><i id='pause-play-shifty' class='fa fa-pause left-shifty'></i><i id='close-shifty' class='fa fa-times right-shifty'></i><div id='progress-bar-shifty'><div id='progress-shifty'></div><div id='seek-shifty'></div></div></div></div>");
+  $("body").prepend("<div id='shifty-spritz' class='hide' tabindex='1'><div id='words-shifty'><div id='countdown-shifty'></div><div id='left-shifty'>h</div><div id='center-shifty'>e</div><div id='right-shifty'>llo</div><span id='clear-shifty'></span></div><div id='controls-shifty'><i id='pause-play-shifty' class='fa fa-pause left-shifty'></i><i id='close-shifty' class='fa fa-times right-shifty'></i><div id='progress-bar-shifty'><div id='progress-shifty'></div><div id='seek-shifty'></div></div></div></div>");
   var date, newDate, pressedTimeout, progressBarMouseDown, shiftySpritz, timeDiff;
   shiftySpritz = {
     meta: {
@@ -107,8 +107,8 @@
       this.readNextWord(this.meta.wpm, readNext);
     },
     updateWordPositioning: function() {
-      this.meta.$center.css("margin-left", -1 * this.meta.$center.width() / 2 + "px");
-      return this.meta.$left.css("padding-right", this.meta.$center.width() / 2 + "px");
+      this.meta.$center.css("margin-left", -this.meta.$center.width() / 2 + "px");
+      this.meta.$left.css("padding-right", this.meta.$center.width() / 2 + "px");
     },
     readNextWord: function(delay, readNext) {
       var self, splitWord, wpm, _ref;

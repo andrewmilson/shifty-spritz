@@ -118,10 +118,28 @@
     border-color inherit
     position relative
 
-    &:after
+    #clear-shifty
+      display block
       clear both
+      width 0
+      height 0
+
+    &:before, &:after
       content ""
       display block
+      border 5px solid transparent
+      position absolute
+      left 30%
+
+    &:after
+      border-top-color inherit
+      top 0
+      margin 0 0 0 -5px
+
+    &:before
+      border-bottom-color inherit
+      top 100%
+      margin -10px 0 0 -5px
 
     #countdown-shifty
       height 100%
@@ -144,23 +162,6 @@
       color #fa3d3d
       display block
       position relative
-
-      &:before, &:after
-        content ""
-        display block
-        border 5px solid transparent
-        position absolute
-        left 50%
-
-      &:after
-        border-top-color inherit
-        top 0
-        margin 0 0 0 -5px
-
-      &:before
-        border-bottom-color inherit
-        top 100%
-        margin -10px 0 0 -5px
 
     #left-shifty
       width 30%
