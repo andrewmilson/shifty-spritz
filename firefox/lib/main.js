@@ -2,7 +2,8 @@ var { ToggleButton } = require('sdk/ui/button/toggle')
   , panels = require("sdk/panel")
   , self = require("sdk/self")
   , ports = []
-  , ss = require("sdk/simple-storage");
+  , ss = require("sdk/simple-storage")
+  , array = require('sdk/util/array');
 
 // ss.storage = ss.storage || {}
 
@@ -70,23 +71,20 @@ exports.main = function() {
       self.data.url("js/spritzify.js")
     ],
     onAttach: function(worker) {
-      ports.push(worker.port);
+      array.add(ports, worker.port);
       worker.port.emit("settings-update", ss.storage);
+      worker.port.on("understood-changes", function(message) { settingsUpdate(message); })
 
       worker.on('detach', function() {
-        var index = ports.indexOf(worker.port);
-        if (index > -1)
-          ports.splice(index, 1);
+        array.remove(ports, this.port);
       });
 
-      worker.port.on("settings-update", function(message) { settingsUpdate(message); })
-
-      worker.on('pageshow', function() { ports.push(worker.port); });
+      worker.on('pageshow', function() {
+        array.add(ports, this.port);
+      });
 
       worker.on('pagehide', function() {
-        var index = ports.indexOf(worker.port);
-        if (index !== -1)
-          ports.splice(index, 1);
+        array.remove(ports, this.port);
       });
     }
   });
