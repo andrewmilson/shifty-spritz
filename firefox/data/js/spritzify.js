@@ -1,5 +1,5 @@
   $("body").prepend("<div id='shifty-spritz' class='hide' tabindex='1'><div id='words-shifty'><div id='countdown-shifty'></div><div id='left-shifty'>h</div><div id='center-shifty'>e</div><div id='right-shifty'>llo</div><span id='clear-shifty'></span></div><div id='controls-shifty'><i id='pause-play-shifty' class='fa fa-pause left-shifty'></i><i id='close-shifty' class='fa fa-times right-shifty'></i><div id='progress-bar-shifty'><div id='progress-shifty'></div><div id='seek-shifty'></div></div></div></div>");
-  var date, newDate, pressedTimeout, progressBarMouseDown, shiftySpritz, timeDiff;
+  var date, newDate, pressedTimeout, progressBarMouseDown, shiftySpritz, timeDiff, stop;
   shiftySpritz = {
     meta: {
       word: 0,
@@ -217,38 +217,43 @@
   pressedTimeout = 0;
   newDate = 0;
   timeDiff = 0;
+  stop = false;
   shiftySpritz.meta.$document.keydown(function(e) {
-    var selectedText;
-    selectedText = window.getSelection().toString();
-    if (e.shiftKey && e.keyCode === 16) {
-      if (!shiftySpritz.meta.understoodChanges) {
-        pressedTimeout = setTimeout(function() {
-          shiftySpritz.meta.understoodChanges = confirm("Sorry for the inconvenience but I have changed the Shifty Spritz hotkeys. To start reading double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press ESC. If you click OK you will probably never see this message again!");
-          self.port.emit('understood-changes', {understoodChanges: shiftySpritz.meta.understoodChanges});
-        }, 500);
+    if (!stop) {
+      var selectedText;
+      stop = true;
+      selectedText = window.getSelection().toString();
+      if (e.shiftKey && e.keyCode === 16) {
+        if (!shiftySpritz.meta.understoodChanges) {
+          pressedTimeout = setTimeout(function() {
+            shiftySpritz.meta.understoodChanges = confirm("Sorry for the inconvenience but I have changed the Shifty Spritz hotkeys. To start reading double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press ESC. If you click OK you will probably never see this message again!");
+            self.port.emit('understood-changes', {understoodChanges: shiftySpritz.meta.understoodChanges});
+          }, 500);
+        }
+        date = newDate;
+        newDate = new Date().getTime();
+        timeDiff = newDate - date;
+        if (timeDiff < 350 && shiftySpritz.meta.enable && selectedText.length) {
+          newDate = 0;
+          shiftySpritz.show();
+          shiftySpritz.init(selectedText, 500);
+        }
+      } else if (e.keyCode === 27) {
+        shiftySpritz.close();
+      } else if (e.shiftKey && e.keyCode === 32 && !shiftySpritz.meta.$shiftySpritz.hasClass("hide")) {
+        if (shiftySpritz.meta.play) {
+          shiftySpritz.pause();
+        } else {
+          shiftySpritz.play();
+        }
+        e.preventDefault();
       }
-      date = newDate;
-      newDate = new Date().getTime();
-      timeDiff = newDate - date;
-      if (timeDiff < 350 && shiftySpritz.meta.enable && selectedText.length) {
+      if (!e.shiftKey) {
         newDate = 0;
-        shiftySpritz.show();
-        shiftySpritz.init(selectedText, 500);
       }
-    } else if (e.keyCode === 27) {
-      shiftySpritz.close();
-    } else if (e.shiftKey && e.keyCode === 32 && !shiftySpritz.meta.$shiftySpritz.hasClass("hide")) {
-      if (shiftySpritz.meta.play) {
-        shiftySpritz.pause();
-      } else {
-        shiftySpritz.play();
-      }
-      e.preventDefault();
-    }
-    if (!e.shiftKey) {
-      newDate = 0;
     }
   });
   shiftySpritz.meta.$document.keyup(function(e) {
+    stop = false
     return clearTimeout(pressedTimeout);
   });

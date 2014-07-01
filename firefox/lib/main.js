@@ -10,10 +10,11 @@ var { ToggleButton } = require('sdk/ui/button/toggle')
 ss.storage.wpm = ss.storage.wpm || "300";
 ss.storage.delay = ss.storage.delay || 500;
 ss.storage.style = ss.storage.style || "bold";
+ss.storage.understoodChanges = (typeof ss.storage.understoodChanges == "undefined" ? false : !!ss.storage.understoodChanges);
 ss.storage.size = ss.storage.size || "25";
 ss.storage.color = ss.storage.color || "#fa3d3d";
 ss.storage.font = ss.storage.font || "'Droid sans'";
-ss.storage.enable = (typeof ss.enable == "undefined" ? true : !!ss.storage.enable);
+ss.storage.enable = (typeof ss.storage.enable == "undefined" ? true : !!ss.storage.enable);
 
 var panel = panels.Panel({
   contentURL: self.data.url("panel.html"),

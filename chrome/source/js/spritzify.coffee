@@ -214,32 +214,36 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
   pressedTimeout = 0
   newDate = 0
   timeDiff = 0
+  stop = false
   shiftySpritz.meta.$document.keydown (e) ->
-    selectedText = window.getSelection().toString()
-    if e.shiftKey and e.keyCode is 16
-      unless shiftySpritz.meta.understoodChanges
-        pressedTimeout = setTimeout(->
-          shiftySpritz.meta.understoodChanges = confirm "Sorry for the inconvenience but I have changed the Shifty Spritz hotkeys. To start reading double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press ESC. If you click OK you will probably never see this message again!"
-          chrome.storage.sync.set
-            understoodChanges: shiftySpritz.meta.understoodChanges
-        , 500)
-      date = newDate
-      newDate = new Date().getTime()
-      timeDiff = newDate - date
-      if timeDiff < 350 and shiftySpritz.meta.enable and selectedText.length
+    unless stop
+      stop = true
+      selectedText = window.getSelection().toString()
+      if e.shiftKey and e.keyCode is 16
+        unless shiftySpritz.meta.understoodChanges
+          pressedTimeout = setTimeout(->
+            shiftySpritz.meta.understoodChanges = confirm "Sorry for the inconvenience but I have changed the Shifty Spritz hotkeys. To start reading double tap SHIFT on some selected text. To pause and play press SHIFT + SPACE together. To close press ESC. If you click OK you will probably never see this message again!"
+            chrome.storage.sync.set
+              understoodChanges: shiftySpritz.meta.understoodChanges
+          , 500)
+        date = newDate
+        newDate = new Date().getTime()
+        timeDiff = newDate - date
+        if timeDiff < 350 and shiftySpritz.meta.enable and selectedText.length
+          newDate = 0
+          shiftySpritz.show()
+          shiftySpritz.init selectedText, 500
+      else if e.keyCode is 27
+        shiftySpritz.close()
+      else if e.shiftKey and e.keyCode is 32 and not shiftySpritz.meta.$shiftySpritz.hasClass("hide")
+        if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
+        e.preventDefault()
+      unless e.shiftKey
         newDate = 0
-        shiftySpritz.show()
-        shiftySpritz.init selectedText, 500
-    else if e.keyCode is 27
-      shiftySpritz.close()
-    else if e.shiftKey and e.keyCode is 32 and not shiftySpritz.meta.$shiftySpritz.hasClass("hide")
-      if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
-      e.preventDefault()
-    unless e.shiftKey
-      newDate = 0
     return
 
   shiftySpritz.meta.$document.keyup (e) ->
+    stop = false
     clearTimeout pressedTimeout
 
   return
