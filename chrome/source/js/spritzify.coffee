@@ -215,8 +215,10 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
   newDate = 0
   timeDiff = 0
   stop = false
+  oldKeyCode = -1
   shiftySpritz.meta.$document.keydown (e) ->
-    unless stop
+    unless stop && e.keyCode is oldKeyCode
+      oldKeyCode = e.keyCode
       stop = true
       selectedText = window.getSelection().toString()
       if e.shiftKey and e.keyCode is 16

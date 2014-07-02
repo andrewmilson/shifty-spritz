@@ -1,5 +1,5 @@
   $("body").prepend("<div id='shifty-spritz' class='hide' tabindex='1'><div id='words-shifty'><div id='countdown-shifty'></div><div id='left-shifty'>h</div><div id='center-shifty'>e</div><div id='right-shifty'>llo</div><span id='clear-shifty'></span></div><div id='controls-shifty'><i id='pause-play-shifty' class='fa fa-pause left-shifty'></i><i id='close-shifty' class='fa fa-times right-shifty'></i><div id='progress-bar-shifty'><div id='progress-shifty'></div><div id='seek-shifty'></div></div></div></div>");
-  var date, newDate, pressedTimeout, progressBarMouseDown, shiftySpritz, timeDiff, stop;
+  var date, newDate, pressedTimeout, progressBarMouseDown, shiftySpritz, timeDiff, stop, oldKeyCode;
   shiftySpritz = {
     meta: {
       word: 0,
@@ -218,8 +218,9 @@
   newDate = 0;
   timeDiff = 0;
   stop = false;
+  oldKeyCode = -1;
   shiftySpritz.meta.$document.keydown(function(e) {
-    if (!stop) {
+    if (!(stop && e.keyCode === oldKeyCode)) {
       var selectedText;
       stop = true;
       selectedText = window.getSelection().toString();
