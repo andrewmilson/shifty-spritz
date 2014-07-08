@@ -21,7 +21,7 @@
     </script>
     <script>
       $(function() {
-        $("#chrome-download").click(function() {
+        $("#chrome-download, #firefox-download").click(function() {
           $("#download-completion").fadeIn(500);
         });
         $("#download-completion-dissmiss").click(function() {
@@ -90,7 +90,7 @@
     </div>
     <div class="container">
       <img src="images/shifty-spritz.png" alt="Shifty Spritz" id="logo">
-      <h1>Shifty Spritz <small>by Andrew Milson</small></h1>
+      <h1>Shifty Spritz <small>by <a href="http://andrewmilson.com">Andrew Milson</a></small></h1>
       <h3 style="color: #333;">Shifty Spritz is a FREE Spritz-type speed reader extension for browsers. It will save you HEAPS of time! Try it out on this page by selecting some text and double tapping <span class="btn btn-default">shift</span></h3>
       <iframe style="margin: 30px 0 0 0;" width="560" height="350" src="//www.youtube.com/embed/uuFa_5xlwR8?autohide=1" frameborder="0" allowfullscreen></iframe>
       <hr>
@@ -100,7 +100,7 @@
           <a href="https://chrome.google.com/webstore/detail/shifty-spritz/aibmmfofaeipbiaocgabhobgedbfdiih" id="chrome-download" target="_blank"><img src="images/chrome.png" alt="Chrome"><span>Chrome Extension</span></a>
         </li>
         <li>
-          <a href=""><img src="images/firefox-coming-soon-edit.png" alt="Firefox" onclick="return false"><span style="color: #666;">Firefox Extension</span></a>
+          <a href="https://addons.mozilla.org/en-US/firefox/addon/shifty-spritz/" id="firefox-download" target="_blank"><img src="images/firefox.png" alt="Firefox">Firefox Extension</a>
         </li>
       </ul>
       <hr>
