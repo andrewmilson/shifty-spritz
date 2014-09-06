@@ -26,7 +26,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
     show: ->
       if shiftySpritz.meta.$shiftySpritz.hasClass("hide")
-        $("body").addClass("shifty-spritz").css
+        $("html").css
           "margin-top": shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"
           position: "relative"
         $("*").each (index, element) ->
@@ -35,6 +35,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
         @meta.$shiftySpritz.css
           "top": "0"
           "margin-top": "0"
+          "display": "block"
         @meta.$shiftySpritz.removeClass "hide"
         true
       else
@@ -42,11 +43,11 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
 
     close: ->
       unless shiftySpritz.meta.$shiftySpritz.hasClass("hide")
-        $("body").css "margin-top", "0px"
-
+        $("html").css "margin-top", "0px"
         $("*").each (index, element) ->
           $(element).css "top", $(element).position().top - shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
           return
+        shiftySpritz.meta.$shiftySpritz.css "display", "none"
         shiftySpritz.meta.$shiftySpritz.addClass "hide"
         true
       else

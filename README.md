@@ -21,7 +21,7 @@ Make sure you have [cfx](https://developer.mozilla.org/en-US/Add-ons/SDK/Tools/c
     git clone https://github.com/andrewmilson/shifty-spritz.git
     cd shifty-spritz/firefox/
 
-    # Launch an instance of Firefox with your Shifty Spritz installed.
+    # Launch an instance of Firefox with Shifty Spritz installed.
     cfx run
 
     # ~ OR ~

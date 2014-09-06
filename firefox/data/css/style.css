@@ -246,6 +246,8 @@
   height: 100%;
   color: #333;
   min-height: 1px;
+  -webkit-transition: none;
+  transition: none;
   z-index: 1;
   float: left;
   display: inline;
