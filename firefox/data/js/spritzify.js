@@ -1,4 +1,4 @@
-  $("body").prepend("<div id='shifty-spritz' class='hide' style='display: none;' tabindex='1'><div id='words-shifty'><div id='countdown-shifty'></div><div id='left-shifty'></div><div id='center-shifty'></div><div id='right-shifty'></div><span id='clear-shifty'></span></div><div id='controls-shifty'><i id='pause-play-shifty' class='fa fa-pause left-shifty'></i><i id='close-shifty' class='fa fa-times right-shifty'></i><div id='progress-bar-shifty'><div id='progress-shifty'></div><div id='seek-shifty'></div></div></div></div>");
+  $("body").prepend("<div id='shifty-spritz' class='hide' style='display: none; top: -9999px;' tabindex='1'><div id='words-shifty'><div id='countdown-shifty'></div><div id='left-shifty'></div><div id='center-shifty'></div><div id='right-shifty'></div><span id='clear-shifty'></span></div><div id='controls-shifty'><i id='pause-play-shifty' class='fa fa-pause left-shifty'></i><i id='close-shifty' class='fa fa-times right-shifty'></i><div id='progress-bar-shifty'><div id='progress-shifty'></div><div id='seek-shifty'></div></div></div></div>");
   var date, newDate, pressedTimeout, progressBarMouseDown, shiftySpritz, timeDiff, stop, oldKeyCode;
   shiftySpritz = {
     meta: {
@@ -25,42 +25,32 @@
       $close: $("#shifty-spritz #close-shifty")
     },
     show: function() {
-      if (shiftySpritz.meta.$shiftySpritz.hasClass("hide")) {
-        $("html").css({
-          "margin-top": shiftySpritz.meta.$shiftySpritz.outerHeight() + "px",
-          position: "relative",
+      $("html").css({
+        "margin-top": shiftySpritz.meta.$shiftySpritz.outerHeight() + "px",
+        position: "relative",
 
-        });
-        $("*").each(function(index, element) {
-          if ($(element).css("position") === "fixed") {
-            $(element).css("top", $(element).position().top + shiftySpritz.meta.$shiftySpritz.outerHeight() + "px");
-          }
-        });
-        this.meta.$shiftySpritz.css({
-          "top": "0",
-          "margin-top": "0",
-          "display": "block"
-        });
-        this.meta.$shiftySpritz.removeClass("hide");
-        return true;
-      } else {
-        return false;
-      }
+      });
+      $("*").each(function(index, element) {
+        if ($(element).css("position") === "fixed") {
+          $(element).css("top", $(element).position().top + shiftySpritz.meta.$shiftySpritz.outerHeight() + "px");
+        }
+      });
+      this.meta.$shiftySpritz.css({
+        "top": "0",
+        "margin-top": "0",
+        "display": "block"
+      });
+      this.meta.$shiftySpritz.removeClass("hide");
     },
     close: function() {
-      if (!shiftySpritz.meta.$shiftySpritz.hasClass("hide")) {
-        $("html").css("margin-top", "0px");
-        $("*").each(function(index, element) {
-          if ($(element).css("position") === "fixed") {
-            $(element).css("top", $(element).position().top - shiftySpritz.meta.$shiftySpritz.outerHeight() + "px");
-          }
-        });
-        this.meta.$shiftySpritz.css("display", "none");
-        shiftySpritz.meta.$shiftySpritz.addClass("hide");
-        return true;
-      } else {
-        return false;
-      }
+      $("html").css("margin-top", "0px");
+      $("*").each(function(index, element) {
+        if ($(element).css("position") === "fixed") {
+          $(element).css("top", $(element).position().top - shiftySpritz.meta.$shiftySpritz.outerHeight() + "px");
+        }
+      });
+      this.meta.$shiftySpritz.css("display", "none");
+      shiftySpritz.meta.$shiftySpritz.addClass("hide");
     },
     empty: function(text) {
       return !!text.length;
@@ -244,7 +234,7 @@
         }
       } else if (e.keyCode === 27) {
         shiftySpritz.close();
-      } else if (e.shiftKey && e.keyCode === 32 && !shiftySpritz.meta.$shiftySpritz.hasClass("hide")) {
+      } else if (e.shiftKey && e.keyCode === 32 && !(shiftySpritz.meta.$shiftySpritz.css("display") === "block")) {
         if (shiftySpritz.meta.play) {
           shiftySpritz.pause();
         } else {

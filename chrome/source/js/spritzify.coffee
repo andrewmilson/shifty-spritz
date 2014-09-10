@@ -1,4 +1,4 @@
-$("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></div>").load(chrome.extension.getURL("index.html"), ->
+$("body").prepend $("<div id=\"shifty-spritz\" style=\"display: none;\" tabindex=\"1\"></div>").load(chrome.extension.getURL("index.html"), ->
 
   shiftySpritz =
     meta:
@@ -25,33 +25,25 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
       $close: $("#shifty-spritz #close-shifty")
 
     show: ->
-      if shiftySpritz.meta.$shiftySpritz.hasClass("hide")
-        $("html").css
-          "margin-top": shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"
-          position: "relative"
-        $("*").each (index, element) ->
-          $(element).css "top", $(element).position().top + shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
-          return
-        @meta.$shiftySpritz.css
-          "top": "0"
-          "margin-top": "0"
-          "display": "block"
-        @meta.$shiftySpritz.removeClass "hide"
-        true
-      else
-        false
+      $("html").css
+        "margin-top": shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"
+        position: "relative"
+      $("*").each (index, element) ->
+        $(element).css "top", $(element).position().top + shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
+        return
+      @meta.$shiftySpritz.css
+        "top": "0"
+        "margin-top": "0"
+        "display": "block"
+      return
 
     close: ->
-      unless shiftySpritz.meta.$shiftySpritz.hasClass("hide")
-        $("html").css "margin-top", "0px"
-        $("*").each (index, element) ->
-          $(element).css "top", $(element).position().top - shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
-          return
-        shiftySpritz.meta.$shiftySpritz.css "display", "none"
-        shiftySpritz.meta.$shiftySpritz.addClass "hide"
-        true
-      else
-        false
+      $("html").css "margin-top", "0px"
+      $("*").each (index, element) ->
+        $(element).css "top", $(element).position().top - shiftySpritz.meta.$shiftySpritz.outerHeight() + "px"  if $(element).css("position") is "fixed"
+        return
+      shiftySpritz.meta.$shiftySpritz.css "display", "none"
+      return
 
     empty: (text) ->
       !!text.length
@@ -238,7 +230,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" class=\"hide\" tabindex=\"1\"></d
           shiftySpritz.init selectedText, 500
       else if e.keyCode is 27
         shiftySpritz.close()
-      else if e.shiftKey and e.keyCode is 32 and not shiftySpritz.meta.$shiftySpritz.hasClass("hide")
+      else if e.shiftKey and e.keyCode is 32 and not (shiftySpritz.meta.$shiftySpritz.css("display") is "block")
         if shiftySpritz.meta.play then shiftySpritz.pause() else shiftySpritz.play()
         e.preventDefault()
       unless e.shiftKey
