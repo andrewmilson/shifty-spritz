@@ -17,7 +17,7 @@
       $delaySelect.val(message.delay);
       $enableCheckbox.attr("checked", message.enable);
     });
-    $wpmSelect.change(function() {
+    $wpmSelect.on("input", function() {
       self.port.emit('settings-update', {wpm: $wpmSelect.val()});
     });
     $colorSelect.change(function() {

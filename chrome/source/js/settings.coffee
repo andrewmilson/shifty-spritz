@@ -17,7 +17,7 @@ $(->
     $enableCheckbox.attr "checked", (if typeof value.enable is "undefined" then true else !!value.enable)
     return
 
-  $wpmSelect.change ->
+  $wpmSelect.on "input", ->
     chrome.storage.sync.set
       wpm: $wpmSelect.val()
 
