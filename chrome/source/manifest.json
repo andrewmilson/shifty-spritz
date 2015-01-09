@@ -1,12 +1,12 @@
 {
   "manifest_version": 2,
-  "name": "Shifty Spritz",
+  "name": "Speedy Readie",
   "description": "Easy to use Spritz-type speed reader. Just select text and double tap shift!",
-  "version": "2.12",
+  "version": "2.13",
   "browser_action": {
     "default_icon": "images/icon.png",
     "default_popup": "popup.html",
-    "default_title": "Shifty Spritz"
+    "default_title": "Speedy Readie"
   },
   "content_scripts": [
     {

@@ -11,7 +11,7 @@ $("body").prepend $("<div id=\"shifty-spritz\" style=\"display: none;\" tabindex
       delay: 500
       understoodChanges: false
       $document: $(document)
-      $shiftySpritz: $(this)
+      $shiftySpritz: $("<div id=\"shifty-spritz\" style=\"display: none;\" tabindex=\"1\"></div>")
       $countdown: $("#shifty-spritz #countdown-shifty")
       $words: $("#shifty-spritz #words-shifty")
       $wordDivs: $("#shifty-spritz #words-shifty div")
