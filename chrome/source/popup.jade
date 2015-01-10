@@ -1,0 +1,133 @@
+doctype html
+html
+  head
+    title Settings and Info
+    script(src="js/jquery.js")
+    script(src="js/settings.js")
+    link(rel="stylesheet", href="css/droid-sans.css")
+    link(href='css/droid-sans.css', rel='stylesheet', type='text/css')
+    link(href="css/font-awesome.css", rel="stylesheet")
+    link(rel="stylesheet", href="css/layout.css")
+  body
+    h4 Time is money!
+    //- p Hi I am Andrew the developer of Shifty Spritz thanks for downloading and using Shifty Spritz. If you enjoy using this please consider donating to support future projects.
+    p How much time has Shifty Spritz saved you?
+    a.btn.warning(href="http://andrewmilson.github.io/shifty-spritz/#donate", target="_blank", style="width: 100%;") DONATE :)
+    hr
+    h4 Instructions
+    span(style="margin: 5px 0; display: block;")
+      strong If it's not working
+      = " "
+      | try refreshing the page. Note that it will not work on PDF's or some websites. I am very sorry for this although chrome does not give me the permmision to do so.
+    span.btn.dark.key shift
+    = " "
+    strong double press
+    = " on selected text to start reading"
+    br
+    span.btn.dark.key shift
+    = " + "
+    span.btn.dark.key space
+    = " press to play and pause"
+    br
+    span.btn.dark.key esc
+    = " press to close the reader"
+    hr
+    h4 Settings
+    form
+      .form-group
+        label(for="wpm-select") Words per minute (wpm)
+        input#wpm-select(name="wpm")
+        //- select#wpm-select(name="wpm")
+        //-   option(value="50") 50 (that is a poor effort)
+        //-   option(value="100") 100 (don&#39;t worry you will get faster)
+        //-   option(value="150") 150 (nothing special)
+        //-   option(value="200") 200 (average speed for reading normaly)
+        //-   option(value="250") 250 (das. My boi!)
+        //-   option(value="300") 300 (nice! 5 words per second)
+        //-   option(value="350") 350
+        //-   option(value="400") 400
+        //-   option(value="450") 450
+        //-   option(value="500") 500
+        //-   option(value="550") 550
+        //-   option(value="600") 600 (damn! thats 10 words per second)
+        //-   option(value="650") 650
+        //-   option(value="700") 700
+        //-   option(value="750") 750
+        //-   option(value="800") 800
+        //-   option(value="850") 850
+        //-   option(value="900") 900 (your a frickin PRO)
+        //-   option(value="950") 950 (whew! that is talent)
+        //-   option(value="1000") 1000 (respect! exceeding those tripple digits)
+        //-   option(value="1100") 1100 (Such AMAZE)
+        //-   option(value="1250") 1250
+        //-   option(value="1500") 1500
+        //-   option(value="1750") 1750
+        //-   option(value="2000") 2000
+        //-   option(value="2500") 2500
+        //-   option(value="3000") 3000
+        //-   option(value="3500") 3500
+        //-   option(value="4000") 4000
+        //-   option(value="4500") 4500
+        //-   option(value="5000") 5000
+        //-   option(value="5500") 5500
+        //-   option(value="6000") 6000
+        //-   option(value="6500") 6500
+        //-   option(value="7000") 7000
+        //-   option(value="7500") 7500
+        //-   option(value="8000") 8000
+        //-   option(value="8500") 8500
+        //-   option(value="9000") 9000
+        //-   option(value="9500") 9500
+        //-   option(value="10000") 10000 (!!!S$&t JUST GOT REAL!!!)
+        //-   option(value="47893748932984") 47893748932984 (are you human?)
+        //-   option(value="999999999999999") 999999999999999 (um. I&#39;m gonna go clean up my pants)
+        //-   option(value="89230547547814031578623874506715231890985764819874678175698765170") 89230547547814031578623874506715231890985764819874678175698765170 (no comment)
+      .form-group
+        label(for="size-select") Reader size
+        select#size-select(name="size")
+          option(value="20") small
+          option(value="25") medium
+          option(value="30") large
+          option(value="40") larger
+          option(value="100") humungus
+          option(value="150") gigantic
+      .form-group
+        label(for="font-select") Font
+        select#font-select(name="font")
+          option(value="'Droid sans'") Droid Sans (default)
+          option(value="Georgia, serif") Georgia
+          option(value="'Times New Roman', Times, serif") Times New Roman
+          option(value="Arial, Helvetica, sans-serif") Arial
+          option(value="Verdana, Geneva, sans-serif") Verdana
+          option(value="'Courier New', Courier, monospace") Corier New
+      .form-group
+        label(for="style-select") Font style
+        select#style-select(name="style")
+          option(value="normal") none
+          option(value="bold") bold
+      .form-group
+        label(for="style-select") Start delay
+        select#delay-select(name="delay")
+          option(value="100") 0.1 seconds
+          option(value="200") 0.2 seconds
+          option(value="300") 0.3 seconds
+          option(value="400") 0.4 seconds
+          option(value="500") 0.5 seconds
+          option(value="600") 0.6 seconds
+          option(value="700") 0.7 seconds
+          option(value="800") 0.8 seconds
+          option(value="900") 0.9 seconds
+          option(value="1000") 1.0 seconds
+      .form-group
+        label(for="color-select") Center letter color
+        select#color-select(name="color")
+          option(value="#fa3d3d") red
+          option(value="#2990FC") blue
+          option(value="#11c900") green
+          option(value="#903dfa") purple
+          option(value="#f49400") orange
+          option(value="#fdff00") yellow
+          option(value="#fa3dcc") pink
+      .form-group
+        label(for="enable-checkbox") enable
+        input#enable-checkbox(type="checkbox", checked="")
